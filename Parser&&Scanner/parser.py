@@ -1,7 +1,7 @@
 import ply.yacc as yacc
 import sys
 
-sys.path.append("..")
+sys.path.append(".")
 
 from scanner import tokens
 from DataStructures.FunctionsDirectory import functions_Directory
@@ -9,18 +9,18 @@ from DataStructures.Stack import Stack
 from DataStructures.VariablesTable import vars_Table
 from DataStructures.Quadruple import Quadruple
 from DataStructures.Queue import Queue
-from SemanticCube.SemanticCube import semantic_Cube
-from Memory.Memory import memory_Block
-from VirtualMachine.VirtualMachine import virtual_Machine
+#from SemanticCube.SemanticCube import semantic_Cube
+#from Memory.Memory import memory_Block
+#from VirtualMachine.VirtualMachine import virtual_Machine
 #-----------------------------------------------------------------
 
 # Directories
 functionsDirectory = functions_Directory()
-semanticCube = semantic_Cube()
+#semanticCube = semantic_Cube()
 funcReturn = {}
 
 # Memory
-memory = memory_Block()
+#memory = memory_Block()
 
 # Scope management variables
 currentScope = ""
@@ -129,7 +129,6 @@ def p_STATUTE(p):
             | read
             | cycle
             | functioncall SEMICOLON
-            | predefined
             | return
     '''
 
@@ -248,11 +247,11 @@ def p_EXPRESSION(p):
 
 def p_RELATIONAL_OPERATORS(p):
     '''
-    relationaloperators : LESSER
+    relationaloperators : LESS
                         | GREATER
                         | EQUAL
                         | NOTEQUAL
-                        | LESSEROREQUAL
+                        | LESSOREQUAL
                         | GREATEROREQUAL
                         | AND
                         | OR
@@ -300,7 +299,7 @@ def p_TERM(p):
 def p_MATH_OPERATORS2(p):
     '''
     mathoperators2 : TIMES
-                   | DEVIDE
+                   | DIVIDE
     '''
     p[0] = p[1]
 
@@ -308,7 +307,7 @@ def p_do_math_operation2(p):
     '''
     do_math_operation2 :
     '''
-    # Do operations and quadruples for times and devide operations
+    # Do operations and quadruples for times and divide operations
     operator = operatorsStack.top()
     if operator == '*' or operator == '/':
         doOperations(p)
@@ -338,7 +337,6 @@ def p_CONSTANT(p):
              | INT push_int_operand
              | bool push_bool_operand
              | STRING push_string_operand
-             | predefined
              | functioncall
     '''
 
@@ -1320,24 +1318,6 @@ def validateArguments(p):
         calledFunction = ""
         argumCounter = 0
 
-def storePredefinedArgument(p):
-    global currentScope
-
-    # Get operand
-    operand = operandsStack.pop()
-    # Get operand type
-    type = typesStack.pop()
-
-    # Check if the arguments are numeric or not
-    if type != 'int' and type != 'float' and type != 'bool':
-        errorArgumentTypeMissmatch(p)
-    else:
-        # Push predefined function parameter to the stack
-        predefParamStack.push(operand)
-
-        print("storePredefinedArgument", currentScope, operand,
-              "line: " + str(p.lexer.lineno))
-
 
 def accessDimenVariable(p):
     global dimenSupLim
@@ -1514,6 +1494,6 @@ parser = yacc.yacc()
 print("Introduce el nombre del archivo: ")
 filename = raw_input()
 
-file = open("../Pruebas/"+str(filename), 'r')
+file = open("./Pruebas/"+str(filename), 'r')
 
 parser.parse(file.read())
