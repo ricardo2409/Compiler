@@ -1,0 +1,18 @@
+program prueba;
+
+var int a;
+
+function int func1(int n)
+{
+    if(n <= 1) {
+        return n;
+    }
+    else {
+        return func1(n - 1) + func1(n - 2);
+    }
+}
+
+
+int main() {
+    print(func1(4));
+}
