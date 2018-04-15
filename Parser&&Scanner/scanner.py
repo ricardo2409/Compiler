@@ -1,9 +1,9 @@
 import ply.lex as lex
 
 # List of tokens
-tokens = ['ID', 'PLUS', 'MINUS', 'TIMES', 'DEVIDE', #Operators
-          'ASSIGN', 'EQUAL', 'NOTEQUAL', 'GREATER', 'LESSER', # Operators
-          'GREATEROREQUAL', 'LESSEROREQUAL', 'AND', 'OR', 'NOT', # Operators
+tokens = ['ID', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', #Operators
+          'ASSIGN', 'EQUAL', 'NOTEQUAL', 'GREATER', 'LESS', # Operators
+          'GREATEROREQUAL', 'LESSOREQUAL', 'AND', 'OR', 'NOT', # Operators
           'LPAREN', 'RPAREN', 'LBRACKET', 'RBRACKET', 'LBRACE', 'RBRACE', # Delimiters
           'COMMA', 'SEMICOLON', # Delimiters
           'INT', 'STRING', 'FLOAT', 'BOOLEAN', 
