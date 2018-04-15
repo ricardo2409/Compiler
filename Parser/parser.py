@@ -1514,6 +1514,6 @@ parser = yacc.yacc()
 print("Introduce el nombre del archivo: ")
 filename = raw_input()
 
-file = open("../Tests/"+str(filename), 'r')
+file = open("../Pruebas/"+str(filename), 'r')
 
 parser.parse(file.read())
