@@ -1418,6 +1418,23 @@ def validateIndex(p):
         "validateIndex", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand, quad.result),
         "line: " + str(p.lexer.lineno))
 
+def generateEra(p):
+    global quadCounter
+
+    # Get the functions name
+    funcId = p[-3]
+    # Create quadruple for ERA operation
+    quad = Quadruple(quadCounter,'ERA', funcId, None, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment QuadCounter
+    quadCounter += 1
+
+    print("generateEra", currentScope,
+          ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
+           quad.result),
+          "line: " + str(p.lexer.lineno))
+
 def endProgram(p):
     global quadQueue
 
@@ -1433,7 +1450,7 @@ def endProgram(p):
     # Show list of quadruples
     #quadQueue.printQueue()
 
-    vm = virtual_Machine(quadQueue, memory, functionsDirectory)
+    ####vm = virtual_Machine(quadQueue, memory, functionsDirectory)
 
 # Error functions
 def p_error(p):
