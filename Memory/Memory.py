@@ -46,7 +46,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for Integers is full')
+                    print('Integer Variable Memory is full')
                     return None
             elif type == 'float':
                 if self.varCounter < boolStart:
@@ -56,7 +56,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for floats is full')
+                    print(('Float Variable Memory is full')
                     return None
             elif type == 'bool':
                 if self.varCounter < stringStart:
@@ -66,7 +66,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for booleans is full')
+                    print('Boolean Variable Memory is full')
                     return None
             elif type == 'string':
                 if self.varCounter < self.ConstStart:
@@ -76,7 +76,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for strings is full')
+                    print('String Variable Memory is full')
                     return None
 
 
@@ -95,7 +95,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for Integers is full')
+                    print(('Integer Constant Memory is full')
                     return None
             elif type == 'float':
                 if self.constCounter < boolStart:
@@ -105,7 +105,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for floats is full')
+                    print('Float Constant Memory is full')
                     return None
             elif type == 'bool':
                 if self.constCounter < stringStart:
@@ -115,7 +115,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for booleans is full')
+                    print('Boolean Constant Memory is full')
                     return None
             elif type == 'string':
                 if self.constCounter < self.TempStart:
@@ -125,7 +125,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for strings is full')
+                    print('String Constant Memory is full')
                     return None
 
     def storeTempToMemory(self, value, type):
@@ -143,7 +143,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for Integers is full')
+                    print('Integer Temp Memory is full')
                     return None
             elif type == 'float':
                 if self.tempCounter < boolStart:
@@ -153,7 +153,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for floats is full')
+                    print('Float Temp Memory is full')
                     return None
             elif type == 'bool':
                 if self.tempCounter < stringStart:
@@ -163,7 +163,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for booleans is full')
+                    print('Boolean Temp Memory is full')
                     return None
             elif type == 'string':
                 if self.tempCounter < self.MemorySize:
@@ -173,7 +173,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print('Memory space for strings is full')
+                    print('String Temp Memory is full')
                     return None
 
     def storeDimensionVarToMemory(self, value, type, dimension):
