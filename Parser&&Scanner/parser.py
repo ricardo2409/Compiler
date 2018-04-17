@@ -9,18 +9,18 @@ from DataStructures.Stack import Stack
 from DataStructures.VariablesTable import vars_Table
 from DataStructures.Quadruple import Quadruple
 from DataStructures.Queue import Queue
-#from SemanticCube.SemanticCube import semantic_Cube
-#from Memory.Memory import memory_Block
+from SemanticCube.SemanticCube import semantic_Cube
+from Memory.Memory import memory_Block
 #from VirtualMachine.VirtualMachine import virtual_Machine
 #-----------------------------------------------------------------
 
 # Directories
 functionsDirectory = functions_Directory()
-#semanticCube = semantic_Cube()
+semanticCube = semantic_Cube()
 funcReturn = {}
 
 # Memory
-#memory = memory_Block()
+memory = memory_Block()
 
 # Scope management variables
 currentScope = ""
