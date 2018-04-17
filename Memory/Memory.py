@@ -56,7 +56,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print(('Float Variable Memory is full')
+                    print('Float Variable Memory is full')
                     return None
             elif type == 'bool':
                 if self.varCounter < stringStart:
@@ -95,7 +95,7 @@ class memory_Block:
                     self.memoryBlock[virtualAddress] = value
                     return virtualAddress
                 else:
-                    print(('Integer Constant Memory is full')
+                    print('Integer Constant Memory is full')
                     return None
             elif type == 'float':
                 if self.constCounter < boolStart:
