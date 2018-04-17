@@ -1,0 +1,5 @@
+program prueba2;
+
+int main() {
+    print(2+1);
+}

@@ -49,7 +49,6 @@ dimenVar = ""
 dimenSupLim = 0
 
 # Global variables
-color = ""
 endprocnumber = 0
 returns = 0
 
