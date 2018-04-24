@@ -1,0 +1,11 @@
+program prueba3;
+var int Arreglo[5];
+int main() {
+    Arreglo[0] = 1;
+    Arreglo[1] = 2;
+    Arreglo[2] = 3;
+    Arreglo[3] = 4;
+    Arreglo[4] = 5;
+    print(Arreglo[4]);
+
+}

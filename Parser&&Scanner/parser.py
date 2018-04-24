@@ -978,7 +978,7 @@ def doOperations(p):
         quad = Quadruple(quadCounter, operator, leftOperand, rightOperand, virtualAddress)
         # Add quad to QuadQueue
         quadQueue.enqueue(quad)
-        # Push temporals virtual address to operands stack
+        # Push temporal virtual address to operands stack
         operandsStack.push(virtualAddress)
         # Push temporal variables type to types stack
         typesStack.push(resultType)

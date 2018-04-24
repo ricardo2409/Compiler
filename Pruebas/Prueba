@@ -1,18 +1,15 @@
 program prueba;
 
-var int a;
-
-function int func1(int n)
-{
-    if(n <= 1) {
-        return n;
+function int func1(int n) {
+    if(n == 1) {
+        return 1;
     }
     else {
-        return func1(n - 1) + func1(n - 2);
+        return n * func1(n - 1);
     }
 }
 
 
 int main() {
-    print(func1(4));
+    print(func1(5));
 }
