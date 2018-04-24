@@ -11,7 +11,7 @@ from DataStructures.Quadruple import Quadruple
 from DataStructures.Queue import Queue
 from SemanticCube.SemanticCube import semantic_Cube
 from Memory.Memory import memory_Block
-#from VirtualMachine.VirtualMachine import virtual_Machine
+from VirtualMachine.VirtualMachine import virtual_Machine
 #-----------------------------------------------------------------
 
 # Directories
@@ -1449,7 +1449,8 @@ def endProgram(p):
     # Show list of quadruples
     #quadQueue.printQueue()
 
-    ####vm = virtual_Machine(quadQueue, memory, functionsDirectory)
+    #Ejecuta la maquina virtual
+    #vm = virtual_Machine(quadQueue, memory, functionsDirectory)
 
 # Error functions
 def p_error(p):
