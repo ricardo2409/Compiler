@@ -14,7 +14,6 @@ class virtual_Machine:
         self.memory = memory
         self.functionsDirectory = functionsDirectory
         self.quadQueue = quadQueue
-        self.pen = self.penSetup()
 
         print memory.memoryBlock
         quadQueue.printQueue()
@@ -408,6 +407,7 @@ class virtual_Machine:
 
             elif quad.operator == 'END':
                 #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,quad.result)
-                done()
+                print("Quadruplo END")
+                sys.exit()
 
             instructionPointer += 1

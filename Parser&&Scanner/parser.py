@@ -1450,7 +1450,7 @@ def endProgram(p):
     #quadQueue.printQueue()
 
     #Ejecuta la maquina virtual
-    #vm = virtual_Machine(quadQueue, memory, functionsDirectory)
+    vm = virtual_Machine(quadQueue, memory, functionsDirectory)
 
 # Error functions
 def p_error(p):
