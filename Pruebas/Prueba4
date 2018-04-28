@@ -1,0 +1,19 @@
+program prueba;
+
+var bool aprobado;
+
+function void drawcharts(bool b) {
+    print('Entre a funcion');
+    if(b == true) {
+        print('Entre al if dentro de funcion');
+        drawbarchart(16);
+        
+    }
+}
+
+int main() {
+    print('Entre a main');
+    aprobado = true;
+    drawcharts(aprobado);
+    
+}

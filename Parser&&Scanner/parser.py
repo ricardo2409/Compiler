@@ -49,6 +49,7 @@ dimenVar = ""
 dimenSupLim = 0
 
 # Global variables
+color = ""
 endprocnumber = 0
 returns = 0
 
@@ -63,7 +64,6 @@ defaultString = 'Null'
 
 # Validation variables
 functionWithReturn = False
-
 
 # Grammar rules
 def p_PROGRAM(p):
@@ -128,6 +128,7 @@ def p_STATUTE(p):
             | read
             | cycle
             | functioncall SEMICOLON
+            | predefined
             | return
     '''
 
@@ -306,7 +307,7 @@ def p_do_math_operation2(p):
     '''
     do_math_operation2 :
     '''
-    # Do operations and quadruples for times and divide operations
+    # Do operations and quadruples for times and devide operations
     operator = operatorsStack.top()
     if operator == '*' or operator == '/':
         doOperations(p)
@@ -336,6 +337,7 @@ def p_CONSTANT(p):
              | INT push_int_operand
              | bool push_bool_operand
              | STRING push_string_operand
+             | predefined
              | functioncall
     '''
 
@@ -523,6 +525,33 @@ def p_do_while_operation(p):
     # Do Cycle quadruples
     doCycleOperations(p)
 
+
+
+def p_PREDEFINED(p):
+    '''
+    predefined : drawbarchart
+    '''
+
+
+
+def p_DRAWBARCHART(p):
+    
+    '''
+    drawbarchart : DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON
+    '''
+    drawBarChart(p)
+
+def p_store_predefined_argument(p):
+    '''
+    store_predefined_argument :
+    '''
+    storePredefinedArgument(p)
+
+def p_store_color(p):
+    '''
+    store_color :
+    '''
+    storeColor(p)
 
 def p_EMPTY(p):
     '''
@@ -978,7 +1007,7 @@ def doOperations(p):
         quad = Quadruple(quadCounter, operator, leftOperand, rightOperand, virtualAddress)
         # Add quad to QuadQueue
         quadQueue.enqueue(quad)
-        # Push temporal virtual address to operands stack
+        # Push temporals virtual address to operands stack
         operandsStack.push(virtualAddress)
         # Push temporal variables type to types stack
         typesStack.push(resultType)
@@ -1237,6 +1266,22 @@ def checkFunctionExistance(p):
         print("checkFunctionExistance", currentScope, functionsDirectory.getFunctionType(calledFunction),
               "line: " + str(p.lexer.lineno))
 
+def generateEra(p):
+    global quadCounter
+
+    # Get the functions name
+    funcId = p[-3]
+    # Create quadruple for ERA operation
+    quad = Quadruple(quadCounter,'ERA', funcId, None, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment QuadCounter
+    quadCounter += 1
+
+    print("generateEra", currentScope,
+          ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
+           quad.result),
+          "line: " + str(p.lexer.lineno))
 
 def storeArgument(p):
     # Get the argument
@@ -1317,6 +1362,141 @@ def validateArguments(p):
         calledFunction = ""
         argumCounter = 0
 
+def storePredefinedArgument(p):
+    global currentScope
+
+    # Get operand
+    operand = operandsStack.pop()
+    # Get operand type
+    type = typesStack.pop()
+
+    # Check if the arguments are numeric or not
+    if type != 'int' and type != 'float' and type != 'bool' and type != 'string':
+        errorArgumentTypeMissmatch(p)
+    else:
+        # Push predefined function parameter to the stack
+        predefParamStack.push(operand)
+
+        print("storePredefinedArgument", currentScope, operand,
+              "line: " + str(p.lexer.lineno))
+
+def storeColor(p):
+    global color
+
+    # Store color
+    color = p[-1]
+
+def drawLine(p):
+    global color
+    global predefParamStack
+    global quadCounter
+
+    # Create quadruple for the DRAWLINE predefined function
+    quad = Quadruple(quadCounter, 'DRAWLINE', predefParamStack.items, color, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment quadCounter
+    quadCounter += 1
+
+    # Reset parameter stack and color
+    predefParamStack = Stack()
+    color = ""
+
+def drawBarChart(p):
+    global predefParamStack
+    global quadCounter
+
+    print('Estoy en DrawBarChart')
+    # Create quadruple for the DRAWLINE predefined function
+    quad = Quadruple(quadCounter, 'DRAWBARCHART', predefParamStack.items, None, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment quadCounter
+    quadCounter += 1
+
+    # Reset parameter stack and color
+    predefParamStack = Stack()
+
+def drawSquare(p):
+    global color
+    global predefParamStack
+    global quadCounter
+
+    # Create quadruple for the DRAWSQUARE predefined function
+    quad = Quadruple(quadCounter, 'DRAWSQUARE', predefParamStack.items, color, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment quadCounter
+    quadCounter += 1
+
+    # Reset parameter stack and color
+    predefParamStack = Stack()
+    color = ""
+
+def drawTriangle(p):
+    global color
+    global predefParamStack
+    global quadCounter
+
+    # Create quadruple for the DRAWTRIANGLE predefined function
+    quad = Quadruple(quadCounter, 'DRAWTRIANGLE', predefParamStack.items, color, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment quadCounter
+    quadCounter += 1
+
+    # Reset parameter stack and color
+    predefParamStack = Stack()
+    color = ""
+
+def drawCircle(p):
+    global color
+    global predefParamStack
+    global quadCounter
+
+    print('Estoy en drawCircle')
+
+    # Create quadruple for the DRAWCIRCLE predefined function
+    quad = Quadruple(quadCounter, 'DRAWCIRCLE', predefParamStack.items, color, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment quadCounter
+    quadCounter += 1
+
+    # Reset parameter stack and color
+    predefParamStack = Stack()
+    color = ""
+
+def drawPolygon(p):
+    global color
+    global predefParamStack
+    global quadCounter
+
+    print('Estoy en drawPolygon')
+    # Create quadruple for the DRAWPOLYGON predefined function
+    quad = Quadruple(quadCounter, 'DRAWPOLYGON', predefParamStack.items, color, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment quadCounter
+    quadCounter += 1
+
+    # Reset parameter stack and color
+    predefParamStack = Stack()
+    color = ""
+
+def drawItc(p):
+    global color
+    global quadCounter
+
+    # Create quadruple for the DRAWPOLYGON predefined function
+    quad = Quadruple(quadCounter, 'DRAWITC', None, color, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment quadCounter
+    quadCounter += 1
+
+    # Reset parameter stack and color
+    color = ""
 
 def accessDimenVariable(p):
     global dimenSupLim
@@ -1417,23 +1597,6 @@ def validateIndex(p):
         "validateIndex", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand, quad.result),
         "line: " + str(p.lexer.lineno))
 
-def generateEra(p):
-    global quadCounter
-
-    # Get the functions name
-    funcId = p[-3]
-    # Create quadruple for ERA operation
-    quad = Quadruple(quadCounter,'ERA', funcId, None, None)
-    # Add quad to QuadQueue
-    quadQueue.enqueue(quad)
-    # Increment QuadCounter
-    quadCounter += 1
-
-    print("generateEra", currentScope,
-          ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-           quad.result),
-          "line: " + str(p.lexer.lineno))
-
 def endProgram(p):
     global quadQueue
 
@@ -1449,7 +1612,6 @@ def endProgram(p):
     # Show list of quadruples
     #quadQueue.printQueue()
 
-    #Ejecuta la maquina virtual
     vm = virtual_Machine(quadQueue, memory, functionsDirectory)
 
 # Error functions

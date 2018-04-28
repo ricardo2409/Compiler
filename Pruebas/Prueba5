@@ -1,0 +1,9 @@
+program Prueba5;
+
+
+
+int main() {
+
+  drawbarchart(1);
+    
+}

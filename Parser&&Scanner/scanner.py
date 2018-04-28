@@ -27,7 +27,9 @@ reserved = {
     'string': 'STRINGTYPE',
     'void': 'VOID',
     'input': 'INPUT', #Checar**************
-    'var': 'VAR'
+    'var': 'VAR',
+    'drawbarchart' : 'DRAWBARCHART'
+    
 }
 
 tokens = tokens+list(reserved.values())
