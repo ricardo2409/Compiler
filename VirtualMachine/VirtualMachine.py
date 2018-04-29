@@ -409,7 +409,8 @@ class virtual_Machine:
             elif quad.operator == 'DRAWBARCHART':
                 print'\n\n\n\n'
                 print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                      quad.result)    
+                      quad.result) 
+                plt.figure()   
                 plt.title("Bar Chart")
                 plt.xlabel("X")
                 plt.ylabel("Y")
@@ -417,37 +418,40 @@ class virtual_Machine:
                 plt.bar(self.memory.getValueByAddress(leftOperand[2]), self.memory.getValueByAddress(leftOperand[3]), align='center')
                 plt.bar(self.memory.getValueByAddress(leftOperand[4]), self.memory.getValueByAddress(leftOperand[5]), align='center')
                 plt.bar(self.memory.getValueByAddress(leftOperand[6]), self.memory.getValueByAddress(leftOperand[7]), align='center')
-               
+                
                 plt.plot()
-                plt.show()
+               
 
             elif quad.operator == 'DRAWDOTCHART':
                 print'\n\n\n\n'
                 print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                      quad.result)    
+                      quad.result) 
+                plt.figure()    
                 plt.title("Dot Chart")
                 plt.xlabel("X")
                 plt.ylabel("Y")
                 
                 plt.plot([self.memory.getValueByAddress(leftOperand[0]),self.memory.getValueByAddress(leftOperand[2]),self.memory.getValueByAddress(leftOperand[4]),self.memory.getValueByAddress(leftOperand[6])],[self.memory.getValueByAddress(leftOperand[1]),self.memory.getValueByAddress(leftOperand[3]),self.memory.getValueByAddress(leftOperand[5]),self.memory.getValueByAddress(leftOperand[7])],'ro')
                 plt.axis([0, 6, 0, 20])
-                plt.show()
+                
 
             elif quad.operator == 'DRAWLINECHART':
                 print'\n\n\n\n'
                 print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                      quad.result)    
+                      quad.result)  
+                plt.figure()   
                 plt.title("Line Chart")
                 plt.xlabel("X")
                 plt.ylabel("Y")
-               
+                
                 plt.plot([self.memory.getValueByAddress(leftOperand[0]),self.memory.getValueByAddress(leftOperand[1]),self.memory.getValueByAddress(leftOperand[2]),self.memory.getValueByAddress(leftOperand[3]),self.memory.getValueByAddress(leftOperand[4]),self.memory.getValueByAddress(leftOperand[5]),self.memory.getValueByAddress(leftOperand[6]),self.memory.getValueByAddress(leftOperand[7])])
                 plt.axis([0, 6, 0, 20])
-                plt.show()
+                
 
             elif quad.operator == 'END':
                 #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,quad.result)
                 print("Quadruplo END")
+                plt.show()
                 sys.exit()
 
             instructionPointer += 1
