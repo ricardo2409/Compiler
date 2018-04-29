@@ -118,10 +118,9 @@ Rule 108   cycle -> WHILE push_cycle_jump LPAREN sexpression RPAREN do_while_ope
 Rule 109   push_cycle_jump -> <empty>
 Rule 110   do_while_operation -> <empty>
 Rule 111   predefined -> drawbarchart
-Rule 112   drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON
+Rule 112   drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
 Rule 113   store_predefined_argument -> <empty>
-Rule 114   store_color -> <empty>
-Rule 115   empty -> <empty>
+Rule 114   empty -> <empty>
 
 Terminals, with rules where they appear
 
@@ -129,7 +128,7 @@ AND                  : 50
 ASSIGN               : 35 107
 BOOLEAN              : 
 BOOLTYPE             : 34
-COMMA                : 90 103
+COMMA                : 90 103 112 112 112 112 112 112 112
 DIVIDE               : 61
 DRAWBARCHART         : 112
 ELSE                 : 21
@@ -232,13 +231,12 @@ push_string_operand  : 71
 read                 : 14
 relationaloperators  : 42
 return               : 18
-sexpression          : 19 27 35 63 74 88 90 100 106 108 112
+sexpression          : 19 27 35 63 74 88 90 100 106 108 112 112 112 112 112 112 112 112
 statute              : 9
 store_argument       : 88 90
-store_color          : 
 store_function       : 93
 store_parameter      : 101 103
-store_predefined_argument : 112
+store_predefined_argument : 112 112 112 112 112 112 112 112
 store_variable       : 24
 term                 : 53 54 58
 type                 : 24 96 101 103
@@ -304,11 +302,11 @@ state 6
     (1) program -> PROGRAM ID add_global_function SEMICOLON goto_main . vars function main endProgram
     (24) vars -> . VAR type ID array_declaration store_variable SEMICOLON vars
     (25) vars -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     VAR             shift and go to state 8
-    FUNCTION        reduce using rule 115 (empty -> .)
-    INTTYPE         reduce using rule 115 (empty -> .)
+    FUNCTION        reduce using rule 114 (empty -> .)
+    INTTYPE         reduce using rule 114 (empty -> .)
 
     vars                           shift and go to state 7
     empty                          shift and go to state 9
@@ -318,10 +316,10 @@ state 7
     (1) program -> PROGRAM ID add_global_function SEMICOLON goto_main vars . function main endProgram
     (93) function -> . FUNCTION functiontype ID store_function LPAREN parameter RPAREN vars add_func_quad_start block end_process function
     (94) function -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     FUNCTION        shift and go to state 11
-    INTTYPE         reduce using rule 115 (empty -> .)
+    INTTYPE         reduce using rule 114 (empty -> .)
 
     function                       shift and go to state 10
     empty                          shift and go to state 12
@@ -462,10 +460,10 @@ state 23
     (24) vars -> VAR type ID . array_declaration store_variable SEMICOLON vars
     (27) array_declaration -> . LBRACKET dimen_variable sexpression calculate_dimen RBRACKET
     (28) array_declaration -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     LBRACKET        shift and go to state 27
-    SEMICOLON       reduce using rule 115 (empty -> .)
+    SEMICOLON       reduce using rule 114 (empty -> .)
 
     array_declaration              shift and go to state 28
     empty                          shift and go to state 29
@@ -548,17 +546,17 @@ state 32
     (38) sexpression -> . negation expression do_not_operation
     (39) negation -> . NOT push_operator
     (40) negation -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     NOT             shift and go to state 38
-    LPAREN          reduce using rule 115 (empty -> .)
-    ID              reduce using rule 115 (empty -> .)
-    FLOAT           reduce using rule 115 (empty -> .)
-    INT             reduce using rule 115 (empty -> .)
-    STRING          reduce using rule 115 (empty -> .)
-    TRUE            reduce using rule 115 (empty -> .)
-    FALSE           reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
 
     negation                       shift and go to state 36
     sexpression                    shift and go to state 37
@@ -587,13 +585,13 @@ state 35
     (32) type -> . FLOATTYPE
     (33) type -> . STRINGTYPE
     (34) type -> . BOOLTYPE
-    (115) empty -> .
+    (114) empty -> .
 
     INTTYPE         shift and go to state 16
     FLOATTYPE       shift and go to state 15
     STRINGTYPE      shift and go to state 14
     BOOLTYPE        shift and go to state 13
-    RPAREN          reduce using rule 115 (empty -> .)
+    RPAREN          reduce using rule 114 (empty -> .)
 
     empty                          shift and go to state 42
     type                           shift and go to state 43
@@ -621,7 +619,7 @@ state 36
     (79) bool -> . FALSE
     (111) predefined -> . drawbarchart
     (84) functioncall -> . ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments
-    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON
+    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
 
     LPAREN          shift and go to state 55
     ID              shift and go to state 56
@@ -686,12 +684,12 @@ state 40
     (24) vars -> VAR type ID array_declaration store_variable SEMICOLON . vars
     (24) vars -> . VAR type ID array_declaration store_variable SEMICOLON vars
     (25) vars -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     VAR             shift and go to state 8
-    FUNCTION        reduce using rule 115 (empty -> .)
-    INTTYPE         reduce using rule 115 (empty -> .)
-    LBRACE          reduce using rule 115 (empty -> .)
+    FUNCTION        reduce using rule 114 (empty -> .)
+    INTTYPE         reduce using rule 114 (empty -> .)
+    LBRACE          reduce using rule 114 (empty -> .)
 
     empty                          shift and go to state 9
     vars                           shift and go to state 64
@@ -743,9 +741,9 @@ state 45
     AND             reduce using rule 64 (factor -> varConst .)
     OR              reduce using rule 64 (factor -> varConst .)
     RBRACKET        reduce using rule 64 (factor -> varConst .)
+    COMMA           reduce using rule 64 (factor -> varConst .)
     RPAREN          reduce using rule 64 (factor -> varConst .)
     SEMICOLON       reduce using rule 64 (factor -> varConst .)
-    COMMA           reduce using rule 64 (factor -> varConst .)
 
 
 state 46
@@ -765,9 +763,9 @@ state 46
     AND             reduce using rule 111 (predefined -> drawbarchart .)
     OR              reduce using rule 111 (predefined -> drawbarchart .)
     RBRACKET        reduce using rule 111 (predefined -> drawbarchart .)
+    COMMA           reduce using rule 111 (predefined -> drawbarchart .)
     RPAREN          reduce using rule 111 (predefined -> drawbarchart .)
     SEMICOLON       reduce using rule 111 (predefined -> drawbarchart .)
-    COMMA           reduce using rule 111 (predefined -> drawbarchart .)
     ID              reduce using rule 111 (predefined -> drawbarchart .)
     IF              reduce using rule 111 (predefined -> drawbarchart .)
     PRINT           reduce using rule 111 (predefined -> drawbarchart .)
@@ -794,9 +792,9 @@ state 47
     AND             reduce using rule 78 (bool -> TRUE .)
     OR              reduce using rule 78 (bool -> TRUE .)
     RBRACKET        reduce using rule 78 (bool -> TRUE .)
+    COMMA           reduce using rule 78 (bool -> TRUE .)
     RPAREN          reduce using rule 78 (bool -> TRUE .)
     SEMICOLON       reduce using rule 78 (bool -> TRUE .)
-    COMMA           reduce using rule 78 (bool -> TRUE .)
 
 
 state 48
@@ -817,9 +815,9 @@ state 48
     AND             reduce using rule 83 (push_string_operand -> .)
     OR              reduce using rule 83 (push_string_operand -> .)
     RBRACKET        reduce using rule 83 (push_string_operand -> .)
+    COMMA           reduce using rule 83 (push_string_operand -> .)
     RPAREN          reduce using rule 83 (push_string_operand -> .)
     SEMICOLON       reduce using rule 83 (push_string_operand -> .)
-    COMMA           reduce using rule 83 (push_string_operand -> .)
 
     push_string_operand            shift and go to state 68
 
@@ -840,9 +838,9 @@ state 49
     AND             reduce using rule 72 (varConst -> predefined .)
     OR              reduce using rule 72 (varConst -> predefined .)
     RBRACKET        reduce using rule 72 (varConst -> predefined .)
+    COMMA           reduce using rule 72 (varConst -> predefined .)
     RPAREN          reduce using rule 72 (varConst -> predefined .)
     SEMICOLON       reduce using rule 72 (varConst -> predefined .)
-    COMMA           reduce using rule 72 (varConst -> predefined .)
 
 
 state 50
@@ -862,9 +860,9 @@ state 50
     AND             reduce using rule 79 (bool -> FALSE .)
     OR              reduce using rule 79 (bool -> FALSE .)
     RBRACKET        reduce using rule 79 (bool -> FALSE .)
+    COMMA           reduce using rule 79 (bool -> FALSE .)
     RPAREN          reduce using rule 79 (bool -> FALSE .)
     SEMICOLON       reduce using rule 79 (bool -> FALSE .)
-    COMMA           reduce using rule 79 (bool -> FALSE .)
 
 
 state 51
@@ -885,9 +883,9 @@ state 51
     AND             reduce using rule 82 (push_bool_operand -> .)
     OR              reduce using rule 82 (push_bool_operand -> .)
     RBRACKET        reduce using rule 82 (push_bool_operand -> .)
+    COMMA           reduce using rule 82 (push_bool_operand -> .)
     RPAREN          reduce using rule 82 (push_bool_operand -> .)
     SEMICOLON       reduce using rule 82 (push_bool_operand -> .)
-    COMMA           reduce using rule 82 (push_bool_operand -> .)
 
     push_bool_operand              shift and go to state 69
 
@@ -908,9 +906,9 @@ state 52
     AND             reduce using rule 59 (term -> factor .)
     OR              reduce using rule 59 (term -> factor .)
     RBRACKET        reduce using rule 59 (term -> factor .)
+    COMMA           reduce using rule 59 (term -> factor .)
     RPAREN          reduce using rule 59 (term -> factor .)
     SEMICOLON       reduce using rule 59 (term -> factor .)
-    COMMA           reduce using rule 59 (term -> factor .)
 
 
 state 53
@@ -929,9 +927,9 @@ state 53
     AND             reduce using rule 43 (expression -> exp .)
     OR              reduce using rule 43 (expression -> exp .)
     RBRACKET        reduce using rule 43 (expression -> exp .)
+    COMMA           reduce using rule 43 (expression -> exp .)
     RPAREN          reduce using rule 43 (expression -> exp .)
     SEMICOLON       reduce using rule 43 (expression -> exp .)
-    COMMA           reduce using rule 43 (expression -> exp .)
     PLUS            shift and go to state 70
     MINUS           shift and go to state 72
 
@@ -939,7 +937,7 @@ state 53
 
 state 54
 
-    (112) drawbarchart -> DRAWBARCHART . LPAREN sexpression store_predefined_argument RPAREN SEMICOLON
+    (112) drawbarchart -> DRAWBARCHART . LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
 
     LPAREN          shift and go to state 73
 
@@ -982,9 +980,9 @@ state 56
     AND             reduce using rule 36 (push_id_operand -> .)
     OR              reduce using rule 36 (push_id_operand -> .)
     RBRACKET        reduce using rule 36 (push_id_operand -> .)
+    COMMA           reduce using rule 36 (push_id_operand -> .)
     RPAREN          reduce using rule 36 (push_id_operand -> .)
     SEMICOLON       reduce using rule 36 (push_id_operand -> .)
-    COMMA           reduce using rule 36 (push_id_operand -> .)
     LPAREN          reduce using rule 85 (check_function_existance -> .)
 
     check_function_existance       shift and go to state 75
@@ -1008,9 +1006,9 @@ state 57
     AND             reduce using rule 54 (exp -> term .)
     OR              reduce using rule 54 (exp -> term .)
     RBRACKET        reduce using rule 54 (exp -> term .)
+    COMMA           reduce using rule 54 (exp -> term .)
     RPAREN          reduce using rule 54 (exp -> term .)
     SEMICOLON       reduce using rule 54 (exp -> term .)
-    COMMA           reduce using rule 54 (exp -> term .)
     TIMES           shift and go to state 78
     DIVIDE          shift and go to state 77
 
@@ -1034,9 +1032,9 @@ state 58
     AND             reduce using rule 81 (push_int_operand -> .)
     OR              reduce using rule 81 (push_int_operand -> .)
     RBRACKET        reduce using rule 81 (push_int_operand -> .)
+    COMMA           reduce using rule 81 (push_int_operand -> .)
     RPAREN          reduce using rule 81 (push_int_operand -> .)
     SEMICOLON       reduce using rule 81 (push_int_operand -> .)
-    COMMA           reduce using rule 81 (push_int_operand -> .)
 
     push_int_operand               shift and go to state 80
 
@@ -1058,9 +1056,9 @@ state 59
     AND             reduce using rule 80 (push_float_operand -> .)
     OR              reduce using rule 80 (push_float_operand -> .)
     RBRACKET        reduce using rule 80 (push_float_operand -> .)
+    COMMA           reduce using rule 80 (push_float_operand -> .)
     RPAREN          reduce using rule 80 (push_float_operand -> .)
     SEMICOLON       reduce using rule 80 (push_float_operand -> .)
-    COMMA           reduce using rule 80 (push_float_operand -> .)
 
     push_float_operand             shift and go to state 81
 
@@ -1081,9 +1079,9 @@ state 60
     AND             reduce using rule 73 (varConst -> functioncall .)
     OR              reduce using rule 73 (varConst -> functioncall .)
     RBRACKET        reduce using rule 73 (varConst -> functioncall .)
+    COMMA           reduce using rule 73 (varConst -> functioncall .)
     RPAREN          reduce using rule 73 (varConst -> functioncall .)
     SEMICOLON       reduce using rule 73 (varConst -> functioncall .)
-    COMMA           reduce using rule 73 (varConst -> functioncall .)
 
 
 state 61
@@ -1101,9 +1099,9 @@ state 61
     (51) relationaloperators -> . OR
 
     RBRACKET        reduce using rule 41 (do_not_operation -> .)
+    COMMA           reduce using rule 41 (do_not_operation -> .)
     RPAREN          reduce using rule 41 (do_not_operation -> .)
     SEMICOLON       reduce using rule 41 (do_not_operation -> .)
-    COMMA           reduce using rule 41 (do_not_operation -> .)
     LESS            shift and go to state 86
     GREATER         shift and go to state 85
     EQUAL           shift and go to state 87
@@ -1171,10 +1169,10 @@ state 67
     (93) function -> FUNCTION functiontype ID store_function LPAREN parameter RPAREN . vars add_func_quad_start block end_process function
     (24) vars -> . VAR type ID array_declaration store_variable SEMICOLON vars
     (25) vars -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     VAR             shift and go to state 8
-    LBRACE          reduce using rule 115 (empty -> .)
+    LBRACE          reduce using rule 114 (empty -> .)
 
     vars                           shift and go to state 96
     empty                          shift and go to state 9
@@ -1196,9 +1194,9 @@ state 68
     AND             reduce using rule 71 (varConst -> STRING push_string_operand .)
     OR              reduce using rule 71 (varConst -> STRING push_string_operand .)
     RBRACKET        reduce using rule 71 (varConst -> STRING push_string_operand .)
+    COMMA           reduce using rule 71 (varConst -> STRING push_string_operand .)
     RPAREN          reduce using rule 71 (varConst -> STRING push_string_operand .)
     SEMICOLON       reduce using rule 71 (varConst -> STRING push_string_operand .)
-    COMMA           reduce using rule 71 (varConst -> STRING push_string_operand .)
 
 
 state 69
@@ -1218,9 +1216,9 @@ state 69
     AND             reduce using rule 70 (varConst -> bool push_bool_operand .)
     OR              reduce using rule 70 (varConst -> bool push_bool_operand .)
     RBRACKET        reduce using rule 70 (varConst -> bool push_bool_operand .)
+    COMMA           reduce using rule 70 (varConst -> bool push_bool_operand .)
     RPAREN          reduce using rule 70 (varConst -> bool push_bool_operand .)
     SEMICOLON       reduce using rule 70 (varConst -> bool push_bool_operand .)
-    COMMA           reduce using rule 70 (varConst -> bool push_bool_operand .)
 
 
 state 70
@@ -1269,21 +1267,21 @@ state 72
 
 state 73
 
-    (112) drawbarchart -> DRAWBARCHART LPAREN . sexpression store_predefined_argument RPAREN SEMICOLON
+    (112) drawbarchart -> DRAWBARCHART LPAREN . sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     (38) sexpression -> . negation expression do_not_operation
     (39) negation -> . NOT push_operator
     (40) negation -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     NOT             shift and go to state 38
-    LPAREN          reduce using rule 115 (empty -> .)
-    ID              reduce using rule 115 (empty -> .)
-    FLOAT           reduce using rule 115 (empty -> .)
-    INT             reduce using rule 115 (empty -> .)
-    STRING          reduce using rule 115 (empty -> .)
-    TRUE            reduce using rule 115 (empty -> .)
-    FALSE           reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
 
     negation                       shift and go to state 36
     sexpression                    shift and go to state 98
@@ -1295,17 +1293,17 @@ state 74
     (38) sexpression -> . negation expression do_not_operation
     (39) negation -> . NOT push_operator
     (40) negation -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     NOT             shift and go to state 38
-    LPAREN          reduce using rule 115 (empty -> .)
-    ID              reduce using rule 115 (empty -> .)
-    FLOAT           reduce using rule 115 (empty -> .)
-    INT             reduce using rule 115 (empty -> .)
-    STRING          reduce using rule 115 (empty -> .)
-    TRUE            reduce using rule 115 (empty -> .)
-    FALSE           reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
 
     sexpression                    shift and go to state 99
     negation                       shift and go to state 36
@@ -1323,25 +1321,25 @@ state 76
     (67) varConst -> ID push_id_operand . array
     (74) array -> . LBRACKET access_dimen_var sexpression validate_index RBRACKET
     (75) array -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     LBRACKET        shift and go to state 101
-    TIMES           reduce using rule 115 (empty -> .)
-    DIVIDE          reduce using rule 115 (empty -> .)
-    PLUS            reduce using rule 115 (empty -> .)
-    MINUS           reduce using rule 115 (empty -> .)
-    LESS            reduce using rule 115 (empty -> .)
-    GREATER         reduce using rule 115 (empty -> .)
-    EQUAL           reduce using rule 115 (empty -> .)
-    NOTEQUAL        reduce using rule 115 (empty -> .)
-    LESSOREQUAL     reduce using rule 115 (empty -> .)
-    GREATEROREQUAL  reduce using rule 115 (empty -> .)
-    AND             reduce using rule 115 (empty -> .)
-    OR              reduce using rule 115 (empty -> .)
-    RBRACKET        reduce using rule 115 (empty -> .)
-    RPAREN          reduce using rule 115 (empty -> .)
-    SEMICOLON       reduce using rule 115 (empty -> .)
-    COMMA           reduce using rule 115 (empty -> .)
+    TIMES           reduce using rule 114 (empty -> .)
+    DIVIDE          reduce using rule 114 (empty -> .)
+    PLUS            reduce using rule 114 (empty -> .)
+    MINUS           reduce using rule 114 (empty -> .)
+    LESS            reduce using rule 114 (empty -> .)
+    GREATER         reduce using rule 114 (empty -> .)
+    EQUAL           reduce using rule 114 (empty -> .)
+    NOTEQUAL        reduce using rule 114 (empty -> .)
+    LESSOREQUAL     reduce using rule 114 (empty -> .)
+    GREATEROREQUAL  reduce using rule 114 (empty -> .)
+    AND             reduce using rule 114 (empty -> .)
+    OR              reduce using rule 114 (empty -> .)
+    RBRACKET        reduce using rule 114 (empty -> .)
+    COMMA           reduce using rule 114 (empty -> .)
+    RPAREN          reduce using rule 114 (empty -> .)
+    SEMICOLON       reduce using rule 114 (empty -> .)
 
     array                          shift and go to state 102
     empty                          shift and go to state 103
@@ -1407,9 +1405,9 @@ state 80
     AND             reduce using rule 69 (varConst -> INT push_int_operand .)
     OR              reduce using rule 69 (varConst -> INT push_int_operand .)
     RBRACKET        reduce using rule 69 (varConst -> INT push_int_operand .)
+    COMMA           reduce using rule 69 (varConst -> INT push_int_operand .)
     RPAREN          reduce using rule 69 (varConst -> INT push_int_operand .)
     SEMICOLON       reduce using rule 69 (varConst -> INT push_int_operand .)
-    COMMA           reduce using rule 69 (varConst -> INT push_int_operand .)
 
 
 state 81
@@ -1429,9 +1427,9 @@ state 81
     AND             reduce using rule 68 (varConst -> FLOAT push_float_operand .)
     OR              reduce using rule 68 (varConst -> FLOAT push_float_operand .)
     RBRACKET        reduce using rule 68 (varConst -> FLOAT push_float_operand .)
+    COMMA           reduce using rule 68 (varConst -> FLOAT push_float_operand .)
     RPAREN          reduce using rule 68 (varConst -> FLOAT push_float_operand .)
     SEMICOLON       reduce using rule 68 (varConst -> FLOAT push_float_operand .)
-    COMMA           reduce using rule 68 (varConst -> FLOAT push_float_operand .)
 
 
 state 82
@@ -1469,9 +1467,9 @@ state 84
     (38) sexpression -> negation expression do_not_operation .
 
     RBRACKET        reduce using rule 38 (sexpression -> negation expression do_not_operation .)
-    SEMICOLON       reduce using rule 38 (sexpression -> negation expression do_not_operation .)
     COMMA           reduce using rule 38 (sexpression -> negation expression do_not_operation .)
     RPAREN          reduce using rule 38 (sexpression -> negation expression do_not_operation .)
+    SEMICOLON       reduce using rule 38 (sexpression -> negation expression do_not_operation .)
 
 
 state 85
@@ -1592,7 +1590,7 @@ state 93
     (16) statute -> . functioncall SEMICOLON
     (17) statute -> . predefined
     (18) statute -> . return
-    (115) empty -> .
+    (114) empty -> .
     (35) assignment -> . ID push_id_operand array ASSIGN push_operator sexpression SEMICOLON
     (19) condition -> . IF LPAREN sexpression RPAREN do_condition_operation block else
     (106) write -> . PRINT LPAREN sexpression RPAREN SEMICOLON
@@ -1601,9 +1599,9 @@ state 93
     (84) functioncall -> . ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments
     (111) predefined -> . drawbarchart
     (100) return -> . RETURN sexpression SEMICOLON
-    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON
+    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
 
-    RBRACE          reduce using rule 115 (empty -> .)
+    RBRACE          reduce using rule 114 (empty -> .)
     ID              shift and go to state 117
     IF              shift and go to state 119
     PRINT           shift and go to state 108
@@ -1636,11 +1634,11 @@ state 95
     (101) parameter -> type ID store_parameter . array parameterprima
     (74) array -> . LBRACKET access_dimen_var sexpression validate_index RBRACKET
     (75) array -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     LBRACKET        shift and go to state 101
-    COMMA           reduce using rule 115 (empty -> .)
-    RPAREN          reduce using rule 115 (empty -> .)
+    COMMA           reduce using rule 114 (empty -> .)
+    RPAREN          reduce using rule 114 (empty -> .)
 
     array                          shift and go to state 122
     empty                          shift and go to state 103
@@ -1672,7 +1670,7 @@ state 97
     (79) bool -> . FALSE
     (111) predefined -> . drawbarchart
     (84) functioncall -> . ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments
-    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON
+    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
 
     LPAREN          shift and go to state 55
     ID              shift and go to state 56
@@ -1693,10 +1691,10 @@ state 97
 
 state 98
 
-    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression . store_predefined_argument RPAREN SEMICOLON
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression . store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     (113) store_predefined_argument -> .
 
-    RPAREN          reduce using rule 113 (store_predefined_argument -> .)
+    COMMA           reduce using rule 113 (store_predefined_argument -> .)
 
     store_predefined_argument      shift and go to state 125
 
@@ -1759,9 +1757,9 @@ state 102
     AND             reduce using rule 67 (varConst -> ID push_id_operand array .)
     OR              reduce using rule 67 (varConst -> ID push_id_operand array .)
     RBRACKET        reduce using rule 67 (varConst -> ID push_id_operand array .)
+    COMMA           reduce using rule 67 (varConst -> ID push_id_operand array .)
     RPAREN          reduce using rule 67 (varConst -> ID push_id_operand array .)
     SEMICOLON       reduce using rule 67 (varConst -> ID push_id_operand array .)
-    COMMA           reduce using rule 67 (varConst -> ID push_id_operand array .)
 
 
 state 103
@@ -1803,7 +1801,7 @@ state 104
     (79) bool -> . FALSE
     (111) predefined -> . drawbarchart
     (84) functioncall -> . ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments
-    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON
+    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
 
     LPAREN          shift and go to state 55
     ID              shift and go to state 56
@@ -1841,7 +1839,7 @@ state 105
     (79) bool -> . FALSE
     (111) predefined -> . drawbarchart
     (84) functioncall -> . ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments
-    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON
+    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
 
     LPAREN          shift and go to state 55
     ID              shift and go to state 56
@@ -1867,17 +1865,17 @@ state 106
     (38) sexpression -> . negation expression do_not_operation
     (39) negation -> . NOT push_operator
     (40) negation -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     NOT             shift and go to state 38
-    LPAREN          reduce using rule 115 (empty -> .)
-    ID              reduce using rule 115 (empty -> .)
-    FLOAT           reduce using rule 115 (empty -> .)
-    INT             reduce using rule 115 (empty -> .)
-    STRING          reduce using rule 115 (empty -> .)
-    TRUE            reduce using rule 115 (empty -> .)
-    FALSE           reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
 
     negation                       shift and go to state 36
     sexpression                    shift and go to state 131
@@ -2039,7 +2037,7 @@ state 120
     (16) statute -> . functioncall SEMICOLON
     (17) statute -> . predefined
     (18) statute -> . return
-    (115) empty -> .
+    (114) empty -> .
     (35) assignment -> . ID push_id_operand array ASSIGN push_operator sexpression SEMICOLON
     (19) condition -> . IF LPAREN sexpression RPAREN do_condition_operation block else
     (106) write -> . PRINT LPAREN sexpression RPAREN SEMICOLON
@@ -2048,9 +2046,9 @@ state 120
     (84) functioncall -> . ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments
     (111) predefined -> . drawbarchart
     (100) return -> . RETURN sexpression SEMICOLON
-    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON
+    (112) drawbarchart -> . DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
 
-    RBRACE          reduce using rule 115 (empty -> .)
+    RBRACE          reduce using rule 114 (empty -> .)
     ID              shift and go to state 117
     IF              shift and go to state 119
     PRINT           shift and go to state 108
@@ -2083,10 +2081,10 @@ state 122
     (101) parameter -> type ID store_parameter array . parameterprima
     (103) parameterprima -> . COMMA type ID store_parameter parameterprima
     (104) parameterprima -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     COMMA           shift and go to state 139
-    RPAREN          reduce using rule 115 (empty -> .)
+    RPAREN          reduce using rule 114 (empty -> .)
 
     parameterprima                 shift and go to state 140
     empty                          shift and go to state 141
@@ -2119,9 +2117,9 @@ state 124
     AND             reduce using rule 57 (do_math_operation1 -> .)
     OR              reduce using rule 57 (do_math_operation1 -> .)
     RBRACKET        reduce using rule 57 (do_math_operation1 -> .)
+    COMMA           reduce using rule 57 (do_math_operation1 -> .)
     RPAREN          reduce using rule 57 (do_math_operation1 -> .)
     SEMICOLON       reduce using rule 57 (do_math_operation1 -> .)
-    COMMA           reduce using rule 57 (do_math_operation1 -> .)
     TIMES           shift and go to state 78
     DIVIDE          shift and go to state 77
 
@@ -2130,9 +2128,9 @@ state 124
 
 state 125
 
-    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument . RPAREN SEMICOLON
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument . COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
 
-    RPAREN          shift and go to state 144
+    COMMA           shift and go to state 144
 
 
 state 126
@@ -2153,9 +2151,9 @@ state 126
     AND             reduce using rule 66 (pop_false_bottom -> .)
     OR              reduce using rule 66 (pop_false_bottom -> .)
     RBRACKET        reduce using rule 66 (pop_false_bottom -> .)
+    COMMA           reduce using rule 66 (pop_false_bottom -> .)
     RPAREN          reduce using rule 66 (pop_false_bottom -> .)
     SEMICOLON       reduce using rule 66 (pop_false_bottom -> .)
-    COMMA           reduce using rule 66 (pop_false_bottom -> .)
 
     pop_false_bottom               shift and go to state 145
 
@@ -2165,19 +2163,19 @@ state 127
     (88) funcargum -> . sexpression store_argument funcargumprima
     (89) funcargum -> . empty
     (38) sexpression -> . negation expression do_not_operation
-    (115) empty -> .
+    (114) empty -> .
     (39) negation -> . NOT push_operator
     (40) negation -> . empty
 
-    RPAREN          reduce using rule 115 (empty -> .)
-    LPAREN          reduce using rule 115 (empty -> .)
-    ID              reduce using rule 115 (empty -> .)
-    FLOAT           reduce using rule 115 (empty -> .)
-    INT             reduce using rule 115 (empty -> .)
-    STRING          reduce using rule 115 (empty -> .)
-    TRUE            reduce using rule 115 (empty -> .)
-    FALSE           reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
+    RPAREN          reduce using rule 114 (empty -> .)
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
     NOT             shift and go to state 38
 
     negation                       shift and go to state 36
@@ -2191,17 +2189,17 @@ state 128
     (38) sexpression -> . negation expression do_not_operation
     (39) negation -> . NOT push_operator
     (40) negation -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     NOT             shift and go to state 38
-    LPAREN          reduce using rule 115 (empty -> .)
-    ID              reduce using rule 115 (empty -> .)
-    FLOAT           reduce using rule 115 (empty -> .)
-    INT             reduce using rule 115 (empty -> .)
-    STRING          reduce using rule 115 (empty -> .)
-    TRUE            reduce using rule 115 (empty -> .)
-    FALSE           reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
 
     negation                       shift and go to state 36
     sexpression                    shift and go to state 149
@@ -2225,9 +2223,9 @@ state 129
     AND             reduce using rule 62 (do_math_operation2 -> .)
     OR              reduce using rule 62 (do_math_operation2 -> .)
     RBRACKET        reduce using rule 62 (do_math_operation2 -> .)
+    COMMA           reduce using rule 62 (do_math_operation2 -> .)
     RPAREN          reduce using rule 62 (do_math_operation2 -> .)
     SEMICOLON       reduce using rule 62 (do_math_operation2 -> .)
-    COMMA           reduce using rule 62 (do_math_operation2 -> .)
 
     do_math_operation2             shift and go to state 150
 
@@ -2248,9 +2246,9 @@ state 130
     AND             reduce using rule 52 (do_relational_operation -> .)
     OR              reduce using rule 52 (do_relational_operation -> .)
     RBRACKET        reduce using rule 52 (do_relational_operation -> .)
+    COMMA           reduce using rule 52 (do_relational_operation -> .)
     RPAREN          reduce using rule 52 (do_relational_operation -> .)
     SEMICOLON       reduce using rule 52 (do_relational_operation -> .)
-    COMMA           reduce using rule 52 (do_relational_operation -> .)
     PLUS            shift and go to state 70
     MINUS           shift and go to state 72
 
@@ -2277,17 +2275,17 @@ state 133
     (38) sexpression -> . negation expression do_not_operation
     (39) negation -> . NOT push_operator
     (40) negation -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     NOT             shift and go to state 38
-    LPAREN          reduce using rule 115 (empty -> .)
-    ID              reduce using rule 115 (empty -> .)
-    FLOAT           reduce using rule 115 (empty -> .)
-    INT             reduce using rule 115 (empty -> .)
-    STRING          reduce using rule 115 (empty -> .)
-    TRUE            reduce using rule 115 (empty -> .)
-    FALSE           reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
 
     negation                       shift and go to state 36
     sexpression                    shift and go to state 154
@@ -2316,10 +2314,10 @@ state 135
     (107) read -> ID push_id_operand . array ASSIGN push_operator INPUT LPAREN RPAREN SEMICOLON
     (74) array -> . LBRACKET access_dimen_var sexpression validate_index RBRACKET
     (75) array -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     LBRACKET        shift and go to state 101
-    ASSIGN          reduce using rule 115 (empty -> .)
+    ASSIGN          reduce using rule 114 (empty -> .)
 
     array                          shift and go to state 155
     empty                          shift and go to state 103
@@ -2330,17 +2328,17 @@ state 136
     (38) sexpression -> . negation expression do_not_operation
     (39) negation -> . NOT push_operator
     (40) negation -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     NOT             shift and go to state 38
-    LPAREN          reduce using rule 115 (empty -> .)
-    ID              reduce using rule 115 (empty -> .)
-    FLOAT           reduce using rule 115 (empty -> .)
-    INT             reduce using rule 115 (empty -> .)
-    STRING          reduce using rule 115 (empty -> .)
-    TRUE            reduce using rule 115 (empty -> .)
-    FALSE           reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
 
     negation                       shift and go to state 36
     sexpression                    shift and go to state 156
@@ -2420,17 +2418,32 @@ state 143
     AND             reduce using rule 53 (exp -> exp mathoperators1 push_operator term do_math_operation1 .)
     OR              reduce using rule 53 (exp -> exp mathoperators1 push_operator term do_math_operation1 .)
     RBRACKET        reduce using rule 53 (exp -> exp mathoperators1 push_operator term do_math_operation1 .)
+    COMMA           reduce using rule 53 (exp -> exp mathoperators1 push_operator term do_math_operation1 .)
     RPAREN          reduce using rule 53 (exp -> exp mathoperators1 push_operator term do_math_operation1 .)
     SEMICOLON       reduce using rule 53 (exp -> exp mathoperators1 push_operator term do_math_operation1 .)
-    COMMA           reduce using rule 53 (exp -> exp mathoperators1 push_operator term do_math_operation1 .)
 
 
 state 144
 
-    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN . SEMICOLON
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA . sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (38) sexpression -> . negation expression do_not_operation
+    (39) negation -> . NOT push_operator
+    (40) negation -> . empty
+    (114) empty -> .
 
-    SEMICOLON       shift and go to state 159
+    NOT             shift and go to state 38
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
 
+    negation                       shift and go to state 36
+    sexpression                    shift and go to state 159
+    empty                          shift and go to state 39
 
 state 145
 
@@ -2449,9 +2462,9 @@ state 145
     AND             reduce using rule 63 (factor -> LPAREN push_false_bottom sexpression RPAREN pop_false_bottom .)
     OR              reduce using rule 63 (factor -> LPAREN push_false_bottom sexpression RPAREN pop_false_bottom .)
     RBRACKET        reduce using rule 63 (factor -> LPAREN push_false_bottom sexpression RPAREN pop_false_bottom .)
+    COMMA           reduce using rule 63 (factor -> LPAREN push_false_bottom sexpression RPAREN pop_false_bottom .)
     RPAREN          reduce using rule 63 (factor -> LPAREN push_false_bottom sexpression RPAREN pop_false_bottom .)
     SEMICOLON       reduce using rule 63 (factor -> LPAREN push_false_bottom sexpression RPAREN pop_false_bottom .)
-    COMMA           reduce using rule 63 (factor -> LPAREN push_false_bottom sexpression RPAREN pop_false_bottom .)
 
 
 state 146
@@ -2513,9 +2526,9 @@ state 150
     AND             reduce using rule 58 (term -> term mathoperators2 push_operator factor do_math_operation2 .)
     OR              reduce using rule 58 (term -> term mathoperators2 push_operator factor do_math_operation2 .)
     RBRACKET        reduce using rule 58 (term -> term mathoperators2 push_operator factor do_math_operation2 .)
+    COMMA           reduce using rule 58 (term -> term mathoperators2 push_operator factor do_math_operation2 .)
     RPAREN          reduce using rule 58 (term -> term mathoperators2 push_operator factor do_math_operation2 .)
     SEMICOLON       reduce using rule 58 (term -> term mathoperators2 push_operator factor do_math_operation2 .)
-    COMMA           reduce using rule 58 (term -> term mathoperators2 push_operator factor do_math_operation2 .)
 
 
 state 151
@@ -2531,9 +2544,9 @@ state 151
     AND             reduce using rule 42 (expression -> expression relationaloperators push_operator exp do_relational_operation .)
     OR              reduce using rule 42 (expression -> expression relationaloperators push_operator exp do_relational_operation .)
     RBRACKET        reduce using rule 42 (expression -> expression relationaloperators push_operator exp do_relational_operation .)
+    COMMA           reduce using rule 42 (expression -> expression relationaloperators push_operator exp do_relational_operation .)
     RPAREN          reduce using rule 42 (expression -> expression relationaloperators push_operator exp do_relational_operation .)
     SEMICOLON       reduce using rule 42 (expression -> expression relationaloperators push_operator exp do_relational_operation .)
-    COMMA           reduce using rule 42 (expression -> expression relationaloperators push_operator exp do_relational_operation .)
 
 
 state 152
@@ -2555,17 +2568,17 @@ state 153
     (38) sexpression -> . negation expression do_not_operation
     (39) negation -> . NOT push_operator
     (40) negation -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     NOT             shift and go to state 38
-    LPAREN          reduce using rule 115 (empty -> .)
-    ID              reduce using rule 115 (empty -> .)
-    FLOAT           reduce using rule 115 (empty -> .)
-    INT             reduce using rule 115 (empty -> .)
-    STRING          reduce using rule 115 (empty -> .)
-    TRUE            reduce using rule 115 (empty -> .)
-    FALSE           reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
 
     negation                       shift and go to state 36
     sexpression                    shift and go to state 163
@@ -2605,55 +2618,35 @@ state 158
     (93) function -> FUNCTION functiontype ID store_function LPAREN parameter RPAREN vars add_func_quad_start block end_process . function
     (93) function -> . FUNCTION functiontype ID store_function LPAREN parameter RPAREN vars add_func_quad_start block end_process function
     (94) function -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     FUNCTION        shift and go to state 11
-    INTTYPE         reduce using rule 115 (empty -> .)
+    INTTYPE         reduce using rule 114 (empty -> .)
 
     function                       shift and go to state 168
     empty                          shift and go to state 12
 
 state 159
 
-    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression . store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (113) store_predefined_argument -> .
 
-    TIMES           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    DIVIDE          reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    PLUS            reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    MINUS           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    LESS            reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    GREATER         reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    EQUAL           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    NOTEQUAL        reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    LESSOREQUAL     reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    GREATEROREQUAL  reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    AND             reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    OR              reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    RBRACKET        reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    RPAREN          reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    SEMICOLON       reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    COMMA           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    ID              reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    IF              reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    PRINT           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    WHILE           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    RETURN          reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    DRAWBARCHART    reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
-    RBRACE          reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON .)
+    COMMA           reduce using rule 113 (store_predefined_argument -> .)
 
+    store_predefined_argument      shift and go to state 169
 
 state 160
 
     (88) funcargum -> sexpression store_argument . funcargumprima
     (90) funcargumprima -> . COMMA sexpression store_argument funcargumprima
     (91) funcargumprima -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
-    COMMA           shift and go to state 170
-    RPAREN          reduce using rule 115 (empty -> .)
+    COMMA           shift and go to state 171
+    RPAREN          reduce using rule 114 (empty -> .)
 
-    funcargumprima                 shift and go to state 169
-    empty                          shift and go to state 171
+    funcargumprima                 shift and go to state 170
+    empty                          shift and go to state 172
 
 state 161
 
@@ -2673,31 +2666,31 @@ state 161
     AND             reduce using rule 87 (validate_arguments -> .)
     OR              reduce using rule 87 (validate_arguments -> .)
     RBRACKET        reduce using rule 87 (validate_arguments -> .)
+    COMMA           reduce using rule 87 (validate_arguments -> .)
     RPAREN          reduce using rule 87 (validate_arguments -> .)
     SEMICOLON       reduce using rule 87 (validate_arguments -> .)
-    COMMA           reduce using rule 87 (validate_arguments -> .)
 
-    validate_arguments             shift and go to state 172
+    validate_arguments             shift and go to state 173
 
 state 162
 
     (74) array -> LBRACKET access_dimen_var sexpression validate_index . RBRACKET
 
-    RBRACKET        shift and go to state 173
+    RBRACKET        shift and go to state 174
 
 
 state 163
 
     (108) cycle -> WHILE push_cycle_jump LPAREN sexpression . RPAREN do_while_operation block
 
-    RPAREN          shift and go to state 174
+    RPAREN          shift and go to state 175
 
 
 state 164
 
     (106) write -> PRINT LPAREN sexpression RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 175
+    SEMICOLON       shift and go to state 176
 
 
 state 165
@@ -2717,7 +2710,7 @@ state 165
     FALSE           reduce using rule 37 (push_operator -> .)
     DRAWBARCHART    reduce using rule 37 (push_operator -> .)
 
-    push_operator                  shift and go to state 176
+    push_operator                  shift and go to state 177
 
 state 166
 
@@ -2726,7 +2719,7 @@ state 166
 
     LBRACE          reduce using rule 20 (do_condition_operation -> .)
 
-    do_condition_operation         shift and go to state 177
+    do_condition_operation         shift and go to state 178
 
 state 167
 
@@ -2736,7 +2729,7 @@ state 167
     COMMA           reduce using rule 105 (store_parameter -> .)
     RPAREN          reduce using rule 105 (store_parameter -> .)
 
-    store_parameter                shift and go to state 178
+    store_parameter                shift and go to state 179
 
 state 168
 
@@ -2747,41 +2740,48 @@ state 168
 
 state 169
 
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument . COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+
+    COMMA           shift and go to state 180
+
+
+state 170
+
     (88) funcargum -> sexpression store_argument funcargumprima .
 
     RPAREN          reduce using rule 88 (funcargum -> sexpression store_argument funcargumprima .)
 
 
-state 170
+state 171
 
     (90) funcargumprima -> COMMA . sexpression store_argument funcargumprima
     (38) sexpression -> . negation expression do_not_operation
     (39) negation -> . NOT push_operator
     (40) negation -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     NOT             shift and go to state 38
-    LPAREN          reduce using rule 115 (empty -> .)
-    ID              reduce using rule 115 (empty -> .)
-    FLOAT           reduce using rule 115 (empty -> .)
-    INT             reduce using rule 115 (empty -> .)
-    STRING          reduce using rule 115 (empty -> .)
-    TRUE            reduce using rule 115 (empty -> .)
-    FALSE           reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
 
     negation                       shift and go to state 36
-    sexpression                    shift and go to state 179
+    sexpression                    shift and go to state 181
     empty                          shift and go to state 39
 
-state 171
+state 172
 
     (91) funcargumprima -> empty .
 
     RPAREN          reduce using rule 91 (funcargumprima -> empty .)
 
 
-state 172
+state 173
 
     (84) functioncall -> ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments .
 
@@ -2798,12 +2798,12 @@ state 172
     AND             reduce using rule 84 (functioncall -> ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments .)
     OR              reduce using rule 84 (functioncall -> ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments .)
     RBRACKET        reduce using rule 84 (functioncall -> ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments .)
+    COMMA           reduce using rule 84 (functioncall -> ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments .)
     RPAREN          reduce using rule 84 (functioncall -> ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments .)
     SEMICOLON       reduce using rule 84 (functioncall -> ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments .)
-    COMMA           reduce using rule 84 (functioncall -> ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments .)
 
 
-state 173
+state 174
 
     (74) array -> LBRACKET access_dimen_var sexpression validate_index RBRACKET .
 
@@ -2826,16 +2826,16 @@ state 173
     SEMICOLON       reduce using rule 74 (array -> LBRACKET access_dimen_var sexpression validate_index RBRACKET .)
 
 
-state 174
+state 175
 
     (108) cycle -> WHILE push_cycle_jump LPAREN sexpression RPAREN . do_while_operation block
     (110) do_while_operation -> .
 
     LBRACE          reduce using rule 110 (do_while_operation -> .)
 
-    do_while_operation             shift and go to state 180
+    do_while_operation             shift and go to state 182
 
-state 175
+state 176
 
     (106) write -> PRINT LPAREN sexpression RPAREN SEMICOLON .
 
@@ -2848,53 +2848,75 @@ state 175
     RBRACE          reduce using rule 106 (write -> PRINT LPAREN sexpression RPAREN SEMICOLON .)
 
 
-state 176
+state 177
 
     (35) assignment -> ID push_id_operand array ASSIGN push_operator . sexpression SEMICOLON
     (107) read -> ID push_id_operand array ASSIGN push_operator . INPUT LPAREN RPAREN SEMICOLON
     (38) sexpression -> . negation expression do_not_operation
     (39) negation -> . NOT push_operator
     (40) negation -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
-    INPUT           shift and go to state 182
+    INPUT           shift and go to state 184
     NOT             shift and go to state 38
-    LPAREN          reduce using rule 115 (empty -> .)
-    ID              reduce using rule 115 (empty -> .)
-    FLOAT           reduce using rule 115 (empty -> .)
-    INT             reduce using rule 115 (empty -> .)
-    STRING          reduce using rule 115 (empty -> .)
-    TRUE            reduce using rule 115 (empty -> .)
-    FALSE           reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
 
     negation                       shift and go to state 36
-    sexpression                    shift and go to state 181
+    sexpression                    shift and go to state 183
     empty                          shift and go to state 39
 
-state 177
+state 178
 
     (19) condition -> IF LPAREN sexpression RPAREN do_condition_operation . block else
     (8) block -> . LBRACE blockprima RBRACE
 
     LBRACE          shift and go to state 93
 
-    block                          shift and go to state 183
+    block                          shift and go to state 185
 
-state 178
+state 179
 
     (103) parameterprima -> COMMA type ID store_parameter . parameterprima
     (103) parameterprima -> . COMMA type ID store_parameter parameterprima
     (104) parameterprima -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
     COMMA           shift and go to state 139
-    RPAREN          reduce using rule 115 (empty -> .)
+    RPAREN          reduce using rule 114 (empty -> .)
 
-    parameterprima                 shift and go to state 184
+    parameterprima                 shift and go to state 186
     empty                          shift and go to state 141
 
-state 179
+state 180
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA . sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (38) sexpression -> . negation expression do_not_operation
+    (39) negation -> . NOT push_operator
+    (40) negation -> . empty
+    (114) empty -> .
+
+    NOT             shift and go to state 38
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
+
+    negation                       shift and go to state 36
+    sexpression                    shift and go to state 187
+    empty                          shift and go to state 39
+
+state 181
 
     (90) funcargumprima -> COMMA sexpression . store_argument funcargumprima
     (92) store_argument -> .
@@ -2902,71 +2924,80 @@ state 179
     COMMA           reduce using rule 92 (store_argument -> .)
     RPAREN          reduce using rule 92 (store_argument -> .)
 
-    store_argument                 shift and go to state 185
+    store_argument                 shift and go to state 188
 
-state 180
+state 182
 
     (108) cycle -> WHILE push_cycle_jump LPAREN sexpression RPAREN do_while_operation . block
     (8) block -> . LBRACE blockprima RBRACE
 
     LBRACE          shift and go to state 93
 
-    block                          shift and go to state 186
+    block                          shift and go to state 189
 
-state 181
+state 183
 
     (35) assignment -> ID push_id_operand array ASSIGN push_operator sexpression . SEMICOLON
 
-    SEMICOLON       shift and go to state 187
+    SEMICOLON       shift and go to state 190
 
 
-state 182
+state 184
 
     (107) read -> ID push_id_operand array ASSIGN push_operator INPUT . LPAREN RPAREN SEMICOLON
 
-    LPAREN          shift and go to state 188
+    LPAREN          shift and go to state 191
 
 
-state 183
+state 185
 
     (19) condition -> IF LPAREN sexpression RPAREN do_condition_operation block . else
     (21) else -> . ELSE do_else_operation block
     (22) else -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
-    ELSE            shift and go to state 191
-    ID              reduce using rule 115 (empty -> .)
-    IF              reduce using rule 115 (empty -> .)
-    PRINT           reduce using rule 115 (empty -> .)
-    WHILE           reduce using rule 115 (empty -> .)
-    RETURN          reduce using rule 115 (empty -> .)
-    DRAWBARCHART    reduce using rule 115 (empty -> .)
-    RBRACE          reduce using rule 115 (empty -> .)
+    ELSE            shift and go to state 194
+    ID              reduce using rule 114 (empty -> .)
+    IF              reduce using rule 114 (empty -> .)
+    PRINT           reduce using rule 114 (empty -> .)
+    WHILE           reduce using rule 114 (empty -> .)
+    RETURN          reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
+    RBRACE          reduce using rule 114 (empty -> .)
 
-    else                           shift and go to state 189
-    empty                          shift and go to state 190
+    else                           shift and go to state 192
+    empty                          shift and go to state 193
 
-state 184
+state 186
 
     (103) parameterprima -> COMMA type ID store_parameter parameterprima .
 
     RPAREN          reduce using rule 103 (parameterprima -> COMMA type ID store_parameter parameterprima .)
 
 
-state 185
+state 187
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression . store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (113) store_predefined_argument -> .
+
+    COMMA           reduce using rule 113 (store_predefined_argument -> .)
+
+    store_predefined_argument      shift and go to state 195
+
+state 188
 
     (90) funcargumprima -> COMMA sexpression store_argument . funcargumprima
     (90) funcargumprima -> . COMMA sexpression store_argument funcargumprima
     (91) funcargumprima -> . empty
-    (115) empty -> .
+    (114) empty -> .
 
-    COMMA           shift and go to state 170
-    RPAREN          reduce using rule 115 (empty -> .)
+    COMMA           shift and go to state 171
+    RPAREN          reduce using rule 114 (empty -> .)
 
-    funcargumprima                 shift and go to state 192
-    empty                          shift and go to state 171
+    funcargumprima                 shift and go to state 196
+    empty                          shift and go to state 172
 
-state 186
+state 189
 
     (108) cycle -> WHILE push_cycle_jump LPAREN sexpression RPAREN do_while_operation block .
 
@@ -2979,7 +3010,7 @@ state 186
     RBRACE          reduce using rule 108 (cycle -> WHILE push_cycle_jump LPAREN sexpression RPAREN do_while_operation block .)
 
 
-state 187
+state 190
 
     (35) assignment -> ID push_id_operand array ASSIGN push_operator sexpression SEMICOLON .
 
@@ -2992,14 +3023,14 @@ state 187
     RBRACE          reduce using rule 35 (assignment -> ID push_id_operand array ASSIGN push_operator sexpression SEMICOLON .)
 
 
-state 188
+state 191
 
     (107) read -> ID push_id_operand array ASSIGN push_operator INPUT LPAREN . RPAREN SEMICOLON
 
-    RPAREN          shift and go to state 193
+    RPAREN          shift and go to state 197
 
 
-state 189
+state 192
 
     (19) condition -> IF LPAREN sexpression RPAREN do_condition_operation block else .
 
@@ -3012,7 +3043,7 @@ state 189
     RBRACE          reduce using rule 19 (condition -> IF LPAREN sexpression RPAREN do_condition_operation block else .)
 
 
-state 190
+state 193
 
     (22) else -> empty .
 
@@ -3025,39 +3056,68 @@ state 190
     RBRACE          reduce using rule 22 (else -> empty .)
 
 
-state 191
+state 194
 
     (21) else -> ELSE . do_else_operation block
     (23) do_else_operation -> .
 
     LBRACE          reduce using rule 23 (do_else_operation -> .)
 
-    do_else_operation              shift and go to state 194
+    do_else_operation              shift and go to state 198
 
-state 192
+state 195
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument . COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+
+    COMMA           shift and go to state 199
+
+
+state 196
 
     (90) funcargumprima -> COMMA sexpression store_argument funcargumprima .
 
     RPAREN          reduce using rule 90 (funcargumprima -> COMMA sexpression store_argument funcargumprima .)
 
 
-state 193
+state 197
 
     (107) read -> ID push_id_operand array ASSIGN push_operator INPUT LPAREN RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 195
+    SEMICOLON       shift and go to state 200
 
 
-state 194
+state 198
 
     (21) else -> ELSE do_else_operation . block
     (8) block -> . LBRACE blockprima RBRACE
 
     LBRACE          shift and go to state 93
 
-    block                          shift and go to state 196
+    block                          shift and go to state 201
 
-state 195
+state 199
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA . sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (38) sexpression -> . negation expression do_not_operation
+    (39) negation -> . NOT push_operator
+    (40) negation -> . empty
+    (114) empty -> .
+
+    NOT             shift and go to state 38
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
+
+    negation                       shift and go to state 36
+    sexpression                    shift and go to state 202
+    empty                          shift and go to state 39
+
+state 200
 
     (107) read -> ID push_id_operand array ASSIGN push_operator INPUT LPAREN RPAREN SEMICOLON .
 
@@ -3070,7 +3130,7 @@ state 195
     RBRACE          reduce using rule 107 (read -> ID push_id_operand array ASSIGN push_operator INPUT LPAREN RPAREN SEMICOLON .)
 
 
-state 196
+state 201
 
     (21) else -> ELSE do_else_operation block .
 
@@ -3081,4 +3141,208 @@ state 196
     RETURN          reduce using rule 21 (else -> ELSE do_else_operation block .)
     DRAWBARCHART    reduce using rule 21 (else -> ELSE do_else_operation block .)
     RBRACE          reduce using rule 21 (else -> ELSE do_else_operation block .)
+
+
+state 202
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression . store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (113) store_predefined_argument -> .
+
+    COMMA           reduce using rule 113 (store_predefined_argument -> .)
+
+    store_predefined_argument      shift and go to state 203
+
+state 203
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument . COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+
+    COMMA           shift and go to state 204
+
+
+state 204
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA . sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (38) sexpression -> . negation expression do_not_operation
+    (39) negation -> . NOT push_operator
+    (40) negation -> . empty
+    (114) empty -> .
+
+    NOT             shift and go to state 38
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
+
+    negation                       shift and go to state 36
+    sexpression                    shift and go to state 205
+    empty                          shift and go to state 39
+
+state 205
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression . store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (113) store_predefined_argument -> .
+
+    COMMA           reduce using rule 113 (store_predefined_argument -> .)
+
+    store_predefined_argument      shift and go to state 206
+
+state 206
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument . COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+
+    COMMA           shift and go to state 207
+
+
+state 207
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA . sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (38) sexpression -> . negation expression do_not_operation
+    (39) negation -> . NOT push_operator
+    (40) negation -> . empty
+    (114) empty -> .
+
+    NOT             shift and go to state 38
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
+
+    negation                       shift and go to state 36
+    sexpression                    shift and go to state 208
+    empty                          shift and go to state 39
+
+state 208
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression . store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (113) store_predefined_argument -> .
+
+    COMMA           reduce using rule 113 (store_predefined_argument -> .)
+
+    store_predefined_argument      shift and go to state 209
+
+state 209
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument . COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+
+    COMMA           shift and go to state 210
+
+
+state 210
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA . sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (38) sexpression -> . negation expression do_not_operation
+    (39) negation -> . NOT push_operator
+    (40) negation -> . empty
+    (114) empty -> .
+
+    NOT             shift and go to state 38
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
+
+    negation                       shift and go to state 36
+    sexpression                    shift and go to state 211
+    empty                          shift and go to state 39
+
+state 211
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression . store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    (113) store_predefined_argument -> .
+
+    COMMA           reduce using rule 113 (store_predefined_argument -> .)
+
+    store_predefined_argument      shift and go to state 212
+
+state 212
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument . COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+
+    COMMA           shift and go to state 213
+
+
+state 213
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA . sexpression store_predefined_argument RPAREN SEMICOLON
+    (38) sexpression -> . negation expression do_not_operation
+    (39) negation -> . NOT push_operator
+    (40) negation -> . empty
+    (114) empty -> .
+
+    NOT             shift and go to state 38
+    LPAREN          reduce using rule 114 (empty -> .)
+    ID              reduce using rule 114 (empty -> .)
+    FLOAT           reduce using rule 114 (empty -> .)
+    INT             reduce using rule 114 (empty -> .)
+    STRING          reduce using rule 114 (empty -> .)
+    TRUE            reduce using rule 114 (empty -> .)
+    FALSE           reduce using rule 114 (empty -> .)
+    DRAWBARCHART    reduce using rule 114 (empty -> .)
+
+    negation                       shift and go to state 36
+    sexpression                    shift and go to state 214
+    empty                          shift and go to state 39
+
+state 214
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression . store_predefined_argument RPAREN SEMICOLON
+    (113) store_predefined_argument -> .
+
+    RPAREN          reduce using rule 113 (store_predefined_argument -> .)
+
+    store_predefined_argument      shift and go to state 215
+
+state 215
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 216
+
+
+state 216
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 217
+
+
+state 217
+
+    (112) drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .
+
+    TIMES           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    DIVIDE          reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    PLUS            reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    MINUS           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    LESS            reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    GREATER         reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    EQUAL           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    NOTEQUAL        reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    LESSOREQUAL     reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    GREATEROREQUAL  reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    AND             reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    OR              reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    RBRACKET        reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    COMMA           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    RPAREN          reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    SEMICOLON       reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    ID              reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    IF              reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    PRINT           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    WHILE           reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    RETURN          reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    DRAWBARCHART    reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
+    RBRACE          reduce using rule 112 (drawbarchart -> DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON .)
 

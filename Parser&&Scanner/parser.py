@@ -537,7 +537,7 @@ def p_PREDEFINED(p):
 def p_DRAWBARCHART(p):
     
     '''
-    drawbarchart : DRAWBARCHART LPAREN sexpression store_predefined_argument RPAREN SEMICOLON
+    drawbarchart : DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     '''
     drawBarChart(p)
 
@@ -547,11 +547,7 @@ def p_store_predefined_argument(p):
     '''
     storePredefinedArgument(p)
 
-def p_store_color(p):
-    '''
-    store_color :
-    '''
-    storeColor(p)
+
 
 def p_EMPTY(p):
     '''

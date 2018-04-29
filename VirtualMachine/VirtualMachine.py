@@ -409,29 +409,17 @@ class virtual_Machine:
             elif quad.operator == 'DRAWBARCHART':
                 print'\n\n\n\n'
                 print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                      quad.result)
-                
-                print(str(self.memory.getValueByAddress(quad.left_operand[0])))
-                plt.title("hola")
-                plt.xlabel("x")
-                plt.ylabel("y")
-                plt.bar(3, 4, align='center')
+                      quad.result)    
+                plt.title("Bar Chart")
+                plt.xlabel("X")
+                plt.ylabel("Y")
+                plt.bar(self.memory.getValueByAddress(leftOperand[0]), self.memory.getValueByAddress(leftOperand[1]), align='center')
+                plt.bar(self.memory.getValueByAddress(leftOperand[2]), self.memory.getValueByAddress(leftOperand[3]), align='center')
+                plt.bar(self.memory.getValueByAddress(leftOperand[4]), self.memory.getValueByAddress(leftOperand[5]), align='center')
+                plt.bar(self.memory.getValueByAddress(leftOperand[6]), self.memory.getValueByAddress(leftOperand[7]), align='center')
                 plt.plot()
                 plt.show()
-               
-                '''     
-                print(leftOperand[1])
-                print(leftOperand[2])
-                print(leftOperand[3])
-                
-                plt.title(self.memory.getValueByAddress(leftOperand[0])
-                #plt.xlabel(self.memory.getValueByAddress(leftOperand[1])
-                #plt.ylabel(self.memory.getValueByAddress(leftOperand[2])
-                #plt.bar(self.memory.getValueByAddress(leftOperand[3], self.memory.getValueByAddress(leftOperand[4], align='center')
-                #plt.bar(self.memory.getValueByAddress(leftOperand[5], self.memory.getValueByAddress(leftOperand[6], align='center')
-                #plt.bar(self.memory.getValueByAddress(leftOperand[7], self.memory.getValueByAddress(leftOperand[8], align='center')
-                #plt.bar(self.memory.getValueByAddress(leftOperand[9], self.memory.getValueByAddress(leftOperand[10], align='center')
-                '''
+
             elif quad.operator == 'END':
                 #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,quad.result)
                 print("Quadruplo END")
