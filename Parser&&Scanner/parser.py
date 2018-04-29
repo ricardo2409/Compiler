@@ -531,6 +531,7 @@ def p_PREDEFINED(p):
                | drawdotchart
                | drawlinechart
                | drawhistchart
+               | drawpolychart
     '''
 
 def p_DRAWBARCHART(p):    
@@ -556,6 +557,12 @@ def p_DRAWHISTCHART(p):
     drawhistchart : DRAWHISTCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     '''
     drawHistChart(p)
+
+def p_DRAWPOLYCHART(p):    
+    '''
+    drawpolychart : DRAWPOLYCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    '''
+    drawPolyChart(p)
 
 def p_store_predefined_argument(p):
     '''
@@ -1422,6 +1429,8 @@ def drawDotChart(p):
     quadQueue.enqueue(quad)
     # Increment quadCounter
     quadCounter += 1
+    # Reset parameter stack and color
+    predefParamStack = Stack()
 
 def drawLineChart(p):
     global predefParamStack
@@ -1433,6 +1442,8 @@ def drawLineChart(p):
     quadQueue.enqueue(quad)
     # Increment quadCounter
     quadCounter += 1
+    # Reset parameter stack and color
+    predefParamStack = Stack()
 
 def drawHistChart(p):
     global predefParamStack
@@ -1444,6 +1455,21 @@ def drawHistChart(p):
     quadQueue.enqueue(quad)
     # Increment quadCounter
     quadCounter += 1
+    # Reset parameter stack and color
+    predefParamStack = Stack()
+
+def drawPolyChart(p):
+    global predefParamStack
+    global quadCounter
+    print('Estoy en DrawPolyChart')
+    # Create quadruple for the DRAWLINE predefined function
+    quad = Quadruple(quadCounter, 'DRAWPOLYCHART', predefParamStack.items, None, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment quadCounter
+    quadCounter += 1
+    # Reset parameter stack and color
+    predefParamStack = Stack()
 
 def accessDimenVariable(p):
     global dimenSupLim

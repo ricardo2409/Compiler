@@ -31,7 +31,8 @@ reserved = {
     'drawbarchart' : 'DRAWBARCHART',
     'drawdotchart' : 'DRAWDOTCHART',
     'drawlinechart' : 'DRAWLINECHART',
-    'drawhistchart' : 'DRAWHISTCHART'
+    'drawhistchart' : 'DRAWHISTCHART',
+    'drawpolychart' : 'DRAWPOLYCHART'
     
 }
 

@@ -468,7 +468,19 @@ class virtual_Machine:
                 plt.title('Histogram of IQ')
                 plt.axis([40, 160, 0, 0.03])
                 plt.grid(True)
-                plt.show()
+
+            elif quad.operator == 'DRAWPOLYCHART':
+                print'\n\n\n\n'
+                print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
+                      quad.result)  
+                plt.figure()   
+                plt.title("Polygons Chart")
+                # evenly sampled time at 200ms intervals
+                t = np.arange(self.memory.getValueByAddress(leftOperand[0]),self.memory.getValueByAddress(leftOperand[1]),self.memory.getValueByAddress(leftOperand[2]))
+
+                # red dashes, blue squares and green triangles
+                plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')
+                
                                 
 
             elif quad.operator == 'END':
