@@ -30,7 +30,8 @@ reserved = {
     'var': 'VAR',
     'drawbarchart' : 'DRAWBARCHART',
     'drawdotchart' : 'DRAWDOTCHART',
-    'drawlinechart' : 'DRAWLINECHART'
+    'drawlinechart' : 'DRAWLINECHART',
+    'drawhistchart' : 'DRAWHISTCHART'
     
 }
 

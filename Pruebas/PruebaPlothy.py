@@ -1,25 +1,20 @@
+import numpy as np
 import matplotlib.pyplot as plt
 
+# Fixing random state for reproducibility
+np.random.seed(19680801)
+
+mu, sigma = 50, 30
+x = mu + sigma * np.random.randn(10000)
+
+# the histogram of the data
+n, bins, patches = plt.hist(x, 50, normed=1, facecolor='g', alpha=0.75)
 
 
-
-
-x = [5]
-y = [12]
-
-x2 = [6]
-y2 = [6]
-
-
-plt.bar(x, y, align='center')
-
-plt.bar(x2, y2, color='g', align='center')
-
-
-plt.title('Epic Info')
-plt.ylabel('Y axis')
-plt.xlabel('X axis')
-
-
-plt.plot()
+plt.xlabel('Smarts')
+plt.ylabel('Probability')
+plt.title('Histogram of IQ')
+plt.text(60, .025, r'$\mu,\ \sigma$')
+plt.axis([40, 160, 0, 0.03])
+plt.grid(True)
 plt.show()

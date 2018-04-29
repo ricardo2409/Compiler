@@ -530,6 +530,7 @@ def p_PREDEFINED(p):
     predefined : drawbarchart
                | drawdotchart
                | drawlinechart
+               | drawhistchart
     '''
 
 def p_DRAWBARCHART(p):    
@@ -549,6 +550,12 @@ def p_DRAWLINECHART(p):
     drawlinechart : DRAWLINECHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     '''
     drawLineChart(p)
+
+def p_DRAWHISTCHART(p):    
+    '''
+    drawhistchart : DRAWHISTCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    '''
+    drawHistChart(p)
 
 def p_store_predefined_argument(p):
     '''
@@ -1391,21 +1398,6 @@ def storeColor(p):
     # Store color
     color = p[-1]
 
-def drawLine(p):
-    global color
-    global predefParamStack
-    global quadCounter
-
-    # Create quadruple for the DRAWLINE predefined function
-    quad = Quadruple(quadCounter, 'DRAWLINE', predefParamStack.items, color, None)
-    # Add quad to QuadQueue
-    quadQueue.enqueue(quad)
-    # Increment quadCounter
-    quadCounter += 1
-
-    # Reset parameter stack and color
-    predefParamStack = Stack()
-    color = ""
 
 def drawBarChart(p):
     global predefParamStack
@@ -1442,86 +1434,16 @@ def drawLineChart(p):
     # Increment quadCounter
     quadCounter += 1
 
-def drawSquare(p):
-    global color
+def drawHistChart(p):
     global predefParamStack
     global quadCounter
-
-    # Create quadruple for the DRAWSQUARE predefined function
-    quad = Quadruple(quadCounter, 'DRAWSQUARE', predefParamStack.items, color, None)
+    print('Estoy en DrawHistChart')
+    # Create quadruple for the DRAWLINE predefined function
+    quad = Quadruple(quadCounter, 'DRAWHISTCHART', predefParamStack.items, None, None)
     # Add quad to QuadQueue
     quadQueue.enqueue(quad)
     # Increment quadCounter
     quadCounter += 1
-
-    # Reset parameter stack and color
-    predefParamStack = Stack()
-    color = ""
-
-def drawTriangle(p):
-    global color
-    global predefParamStack
-    global quadCounter
-
-    # Create quadruple for the DRAWTRIANGLE predefined function
-    quad = Quadruple(quadCounter, 'DRAWTRIANGLE', predefParamStack.items, color, None)
-    # Add quad to QuadQueue
-    quadQueue.enqueue(quad)
-    # Increment quadCounter
-    quadCounter += 1
-
-    # Reset parameter stack and color
-    predefParamStack = Stack()
-    color = ""
-
-def drawCircle(p):
-    global color
-    global predefParamStack
-    global quadCounter
-
-    print('Estoy en drawCircle')
-
-    # Create quadruple for the DRAWCIRCLE predefined function
-    quad = Quadruple(quadCounter, 'DRAWCIRCLE', predefParamStack.items, color, None)
-    # Add quad to QuadQueue
-    quadQueue.enqueue(quad)
-    # Increment quadCounter
-    quadCounter += 1
-
-    # Reset parameter stack and color
-    predefParamStack = Stack()
-    color = ""
-
-def drawPolygon(p):
-    global color
-    global predefParamStack
-    global quadCounter
-
-    print('Estoy en drawPolygon')
-    # Create quadruple for the DRAWPOLYGON predefined function
-    quad = Quadruple(quadCounter, 'DRAWPOLYGON', predefParamStack.items, color, None)
-    # Add quad to QuadQueue
-    quadQueue.enqueue(quad)
-    # Increment quadCounter
-    quadCounter += 1
-
-    # Reset parameter stack and color
-    predefParamStack = Stack()
-    color = ""
-
-def drawItc(p):
-    global color
-    global quadCounter
-
-    # Create quadruple for the DRAWPOLYGON predefined function
-    quad = Quadruple(quadCounter, 'DRAWITC', None, color, None)
-    # Add quad to QuadQueue
-    quadQueue.enqueue(quad)
-    # Increment quadCounter
-    quadCounter += 1
-
-    # Reset parameter stack and color
-    color = ""
 
 def accessDimenVariable(p):
     global dimenSupLim

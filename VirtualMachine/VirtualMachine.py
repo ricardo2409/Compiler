@@ -1,4 +1,5 @@
 import ply.yacc as yacc
+import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
@@ -446,7 +447,29 @@ class virtual_Machine:
                 
                 plt.plot([self.memory.getValueByAddress(leftOperand[0]),self.memory.getValueByAddress(leftOperand[1]),self.memory.getValueByAddress(leftOperand[2]),self.memory.getValueByAddress(leftOperand[3]),self.memory.getValueByAddress(leftOperand[4]),self.memory.getValueByAddress(leftOperand[5]),self.memory.getValueByAddress(leftOperand[6]),self.memory.getValueByAddress(leftOperand[7])])
                 plt.axis([0, 6, 0, 20])
-                
+
+            elif quad.operator == 'DRAWHISTCHART':
+                print'\n\n\n\n'
+                print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
+                      quad.result)  
+                plt.figure() 
+                # Fixing random state for reproducibility
+                np.random.seed(19680801)
+
+                mu, sigma = self.memory.getValueByAddress(leftOperand[0]), self.memory.getValueByAddress(leftOperand[1])
+                x = mu + sigma * np.random.randn(10000)
+
+                # the histogram of the data
+                n, bins, patches = plt.hist(x, 50, normed=1, facecolor='g', alpha=0.75)
+
+
+                plt.xlabel('Smarts')
+                plt.ylabel('Probability')
+                plt.title('Histogram of IQ')
+                plt.axis([40, 160, 0, 0.03])
+                plt.grid(True)
+                plt.show()
+                                
 
             elif quad.operator == 'END':
                 #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,quad.result)
