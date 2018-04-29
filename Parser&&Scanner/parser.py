@@ -525,21 +525,23 @@ def p_do_while_operation(p):
     # Do Cycle quadruples
     doCycleOperations(p)
 
-
-
 def p_PREDEFINED(p):
     '''
     predefined : drawbarchart
+               | drawdotchart
     '''
 
-
-
-def p_DRAWBARCHART(p):
-    
+def p_DRAWBARCHART(p):    
     '''
     drawbarchart : DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     '''
     drawBarChart(p)
+
+def p_DRAWDOTCHART(p):    
+    '''
+    drawdotchart : DRAWDOTCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    '''
+    drawDotChart(p)
 
 def p_store_predefined_argument(p):
     '''
@@ -1401,7 +1403,6 @@ def drawLine(p):
 def drawBarChart(p):
     global predefParamStack
     global quadCounter
-
     print('Estoy en DrawBarChart')
     # Create quadruple for the DRAWLINE predefined function
     quad = Quadruple(quadCounter, 'DRAWBARCHART', predefParamStack.items, None, None)
@@ -1409,9 +1410,19 @@ def drawBarChart(p):
     quadQueue.enqueue(quad)
     # Increment quadCounter
     quadCounter += 1
-
     # Reset parameter stack and color
     predefParamStack = Stack()
+
+def drawDotChart(p):
+    global predefParamStack
+    global quadCounter
+    print('Estoy en DrawDotChart')
+    # Create quadruple for the DRAWLINE predefined function
+    quad = Quadruple(quadCounter, 'DRAWDOTCHART', predefParamStack.items, None, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment quadCounter
+    quadCounter += 1
 
 def drawSquare(p):
     global color

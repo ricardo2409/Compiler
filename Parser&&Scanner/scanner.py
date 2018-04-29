@@ -28,7 +28,8 @@ reserved = {
     'void': 'VOID',
     'input': 'INPUT', #Checar**************
     'var': 'VAR',
-    'drawbarchart' : 'DRAWBARCHART'
+    'drawbarchart' : 'DRAWBARCHART',
+    'drawdotchart' : 'DRAWDOTCHART'
     
 }
 
