@@ -29,7 +29,8 @@ reserved = {
     'input': 'INPUT', #Checar**************
     'var': 'VAR',
     'drawbarchart' : 'DRAWBARCHART',
-    'drawdotchart' : 'DRAWDOTCHART'
+    'drawdotchart' : 'DRAWDOTCHART',
+    'drawlinechart' : 'DRAWLINECHART'
     
 }
 

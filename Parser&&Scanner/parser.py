@@ -529,6 +529,7 @@ def p_PREDEFINED(p):
     '''
     predefined : drawbarchart
                | drawdotchart
+               | drawlinechart
     '''
 
 def p_DRAWBARCHART(p):    
@@ -542,6 +543,12 @@ def p_DRAWDOTCHART(p):
     drawdotchart : DRAWDOTCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     '''
     drawDotChart(p)
+
+def p_DRAWLINECHART(p):    
+    '''
+    drawlinechart : DRAWLINECHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
+    '''
+    drawLineChart(p)
 
 def p_store_predefined_argument(p):
     '''
@@ -1419,6 +1426,17 @@ def drawDotChart(p):
     print('Estoy en DrawDotChart')
     # Create quadruple for the DRAWLINE predefined function
     quad = Quadruple(quadCounter, 'DRAWDOTCHART', predefParamStack.items, None, None)
+    # Add quad to QuadQueue
+    quadQueue.enqueue(quad)
+    # Increment quadCounter
+    quadCounter += 1
+
+def drawLineChart(p):
+    global predefParamStack
+    global quadCounter
+    print('Estoy en DrawLineChart')
+    # Create quadruple for the DRAWLINE predefined function
+    quad = Quadruple(quadCounter, 'DRAWLINECHART', predefParamStack.items, None, None)
     # Add quad to QuadQueue
     quadQueue.enqueue(quad)
     # Increment quadCounter
