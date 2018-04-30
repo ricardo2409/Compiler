@@ -1,0 +1,35 @@
+program PruebaFind;
+
+var int Arreglo[10];
+var int numero;
+var int posicion;
+var int control;
+
+int main(){
+	posicion = -1;
+	Arreglo[0] = 1;
+    Arreglo[1] = 2;
+    Arreglo[2] = 3;
+    Arreglo[3] = 4;
+    Arreglo[4] = 5;
+    Arreglo[5] = 6;
+    Arreglo[6] = 7;
+    Arreglo[7] = 8;
+    Arreglo[8] = 9;
+    Arreglo[9] = 10;
+	print('Cual valor desea buscar:');
+	numero = input();
+	control = 0;
+	while(control < 10) {
+	    if(Arreglo[control] == numero) {
+	        posicion = control;
+	    }
+	    control = control + 1;
+	}
+	if(posicion == -1){
+		print('No se encontró');
+	} else {
+		print('Si se encontró');
+	}
+
+}
