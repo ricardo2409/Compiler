@@ -93,9 +93,9 @@ Rule 83    push_string_operand -> <empty>
 Rule 84    functioncall -> ID check_function_existance LPAREN generate_era funcargum RPAREN validate_arguments
 Rule 85    check_function_existance -> <empty>
 Rule 86    generate_era -> <empty>
-Rule 87    validate_arguments -> <empty>
-Rule 88    funcargum -> sexpression store_argument funcargumprima
-Rule 89    funcargum -> empty
+Rule 87    funcargum -> sexpression store_argument funcargumprima
+Rule 88    funcargum -> empty
+Rule 89    validate_arguments -> <empty>
 Rule 90    funcargumprima -> COMMA sexpression store_argument funcargumprima
 Rule 91    funcargumprima -> empty
 Rule 92    store_argument -> <empty>
@@ -214,14 +214,14 @@ drawhistchart        : 114
 drawlinechart        : 113
 drawpolychart        : 115
 else                 : 19
-empty                : 10 22 25 28 40 75 89 91 94 102 104
+empty                : 10 22 25 28 40 75 88 91 94 102 104
 endProgram           : 1
 end_process          : 93
 exp                  : 42 43 53
 expression           : 38 42
 factor               : 58 59
 funcargum            : 84
-funcargumprima       : 88 90
+funcargumprima       : 87 90
 function             : 1 93
 functioncall         : 16 73
 functiontype         : 93
@@ -247,9 +247,9 @@ push_string_operand  : 71
 read                 : 14
 relationaloperators  : 42
 return               : 18
-sexpression          : 19 27 35 63 74 88 90 100 106 108 116 116 116 116 116 116 116 116 117 117 117 117 117 117 117 117 118 118 118 118 118 118 118 118 119 119 120 120 120
+sexpression          : 19 27 35 63 74 87 90 100 106 108 116 116 116 116 116 116 116 116 117 117 117 117 117 117 117 117 118 118 118 118 118 118 118 118 119 119 120 120 120
 statute              : 9
-store_argument       : 88 90
+store_argument       : 87 90
 store_function       : 93
 store_parameter      : 101 103
 store_predefined_argument : 116 116 116 116 116 116 116 116 117 117 117 117 117 117 117 117 118 118 118 118 118 118 118 118 119 119 120 120 120
@@ -2736,8 +2736,8 @@ state 146
 state 147
 
     (84) functioncall -> ID check_function_existance LPAREN generate_era . funcargum RPAREN validate_arguments
-    (88) funcargum -> . sexpression store_argument funcargumprima
-    (89) funcargum -> . empty
+    (87) funcargum -> . sexpression store_argument funcargumprima
+    (88) funcargum -> . empty
     (38) sexpression -> . negation expression do_not_operation
     (122) empty -> .
     (39) negation -> . NOT push_operator
@@ -3177,7 +3177,7 @@ state 169
 
 state 170
 
-    (88) funcargum -> sexpression . store_argument funcargumprima
+    (87) funcargum -> sexpression . store_argument funcargumprima
     (92) store_argument -> .
 
     COMMA           reduce using rule 92 (store_argument -> .)
@@ -3194,10 +3194,10 @@ state 171
 
 state 172
 
-    (89) funcargum -> empty .
+    (88) funcargum -> empty .
     (40) negation -> empty .
 
-    RPAREN          reduce using rule 89 (funcargum -> empty .)
+    RPAREN          reduce using rule 88 (funcargum -> empty .)
     LPAREN          reduce using rule 40 (negation -> empty .)
     ID              reduce using rule 40 (negation -> empty .)
     FLOAT           reduce using rule 40 (negation -> empty .)
@@ -3393,7 +3393,7 @@ state 187
 
 state 188
 
-    (88) funcargum -> sexpression store_argument . funcargumprima
+    (87) funcargum -> sexpression store_argument . funcargumprima
     (90) funcargumprima -> . COMMA sexpression store_argument funcargumprima
     (91) funcargumprima -> . empty
     (122) empty -> .
@@ -3407,24 +3407,24 @@ state 188
 state 189
 
     (84) functioncall -> ID check_function_existance LPAREN generate_era funcargum RPAREN . validate_arguments
-    (87) validate_arguments -> .
+    (89) validate_arguments -> .
 
-    TIMES           reduce using rule 87 (validate_arguments -> .)
-    DIVIDE          reduce using rule 87 (validate_arguments -> .)
-    PLUS            reduce using rule 87 (validate_arguments -> .)
-    MINUS           reduce using rule 87 (validate_arguments -> .)
-    LESS            reduce using rule 87 (validate_arguments -> .)
-    GREATER         reduce using rule 87 (validate_arguments -> .)
-    EQUAL           reduce using rule 87 (validate_arguments -> .)
-    NOTEQUAL        reduce using rule 87 (validate_arguments -> .)
-    LESSOREQUAL     reduce using rule 87 (validate_arguments -> .)
-    GREATEROREQUAL  reduce using rule 87 (validate_arguments -> .)
-    AND             reduce using rule 87 (validate_arguments -> .)
-    OR              reduce using rule 87 (validate_arguments -> .)
-    RBRACKET        reduce using rule 87 (validate_arguments -> .)
-    COMMA           reduce using rule 87 (validate_arguments -> .)
-    RPAREN          reduce using rule 87 (validate_arguments -> .)
-    SEMICOLON       reduce using rule 87 (validate_arguments -> .)
+    TIMES           reduce using rule 89 (validate_arguments -> .)
+    DIVIDE          reduce using rule 89 (validate_arguments -> .)
+    PLUS            reduce using rule 89 (validate_arguments -> .)
+    MINUS           reduce using rule 89 (validate_arguments -> .)
+    LESS            reduce using rule 89 (validate_arguments -> .)
+    GREATER         reduce using rule 89 (validate_arguments -> .)
+    EQUAL           reduce using rule 89 (validate_arguments -> .)
+    NOTEQUAL        reduce using rule 89 (validate_arguments -> .)
+    LESSOREQUAL     reduce using rule 89 (validate_arguments -> .)
+    GREATEROREQUAL  reduce using rule 89 (validate_arguments -> .)
+    AND             reduce using rule 89 (validate_arguments -> .)
+    OR              reduce using rule 89 (validate_arguments -> .)
+    RBRACKET        reduce using rule 89 (validate_arguments -> .)
+    COMMA           reduce using rule 89 (validate_arguments -> .)
+    RPAREN          reduce using rule 89 (validate_arguments -> .)
+    SEMICOLON       reduce using rule 89 (validate_arguments -> .)
 
     validate_arguments             shift and go to state 205
 
@@ -3535,9 +3535,9 @@ state 201
 
 state 202
 
-    (88) funcargum -> sexpression store_argument funcargumprima .
+    (87) funcargum -> sexpression store_argument funcargumprima .
 
-    RPAREN          reduce using rule 88 (funcargum -> sexpression store_argument funcargumprima .)
+    RPAREN          reduce using rule 87 (funcargum -> sexpression store_argument funcargumprima .)
 
 
 state 203

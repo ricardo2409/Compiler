@@ -10,7 +10,7 @@ class functions_Directory:
                                         'paramTypes':[], 'paramAddresses': [], 'variables': vars_Table()}
 
     # check if function exists
-    def lookupFunction(self, functionName):
+    def findFunction(self, functionName):
         return self.functions.has_key(functionName)
 
     # Return the type of a function
@@ -25,19 +25,19 @@ class functions_Directory:
 
     # Save the starting quad number of a function
     def setStartQuadNumber(self, functionName, startQuadNumber):
-        if self.lookupFunction(functionName):
+        if self.findFunction(functionName):
             function = self.functions[functionName]
             function['startQuadNumber'] = startQuadNumber
 
     # Add list of parameter types to a function record
     def addParameterType(self, functionName, parameterType):
-        if self.lookupFunction(functionName):
+        if self.findFunction(functionName):
             function = self.functions[functionName]
             function['paramTypes'].append(parameterType)
 
     # Add list of parameter addresses to a function record
     def addParameterAddress(self, functionName, parameterAddress):
-        if self.lookupFunction(functionName):
+        if self.findFunction(functionName):
             function = self.functions[functionName]
             function['paramAddresses'].append(parameterAddress)
 
@@ -55,14 +55,14 @@ class functions_Directory:
     def validateParameters(self, functionName, argumentTypes):
         function = self.functions[functionName]
 
-        if self.lookupFunction(functionName):
+        if self.findFunction(functionName):
             return function['paramTypes'] == argumentTypes
 
     # Insert variable to the VarsTable of a function
     def addFunctionVariable(self, functionName, variableName, variableType, address):
         function = self.functions[functionName]
 
-        if function['variables'].lookupVariable(variableName):
+        if function['variables'].findVariable(variableName):
             return False
         else:
             function['variables'].insertVariable(variableName, variableType, address)

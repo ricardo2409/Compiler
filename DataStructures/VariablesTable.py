@@ -18,7 +18,7 @@ class vars_Table:
             return None
 
     # Check if variable exists
-    def lookupVariable(self, name):
+    def findVariable(self, name):
         return self.variables.has_key(name)
 
     # Return variable's values

@@ -9,7 +9,7 @@ from DataStructures.Stack import Stack
 from DataStructures.VariablesTable import vars_Table
 from DataStructures.Quadruple import Quadruple
 from DataStructures.Queue import Queue
-from SemanticCube.SemanticCube import semantic_Cube
+from DataStructures.SemanticCube import semantic_Cube
 from Memory.Memory import memory_Block
 from VirtualMachine.VirtualMachine import virtual_Machine
 #-----------------------------------------------------------------
@@ -411,17 +411,17 @@ def p_generate_era(p):
     '''
     generateEra(p)
 
-def p_validate_arguments(p):
-    '''
-    validate_arguments :
-    '''
-    validateArguments(p)
-
 def p_FUNCARGUM(p):
     '''
     funcargum : sexpression store_argument funcargumprima
               | empty
     '''
+    
+def p_validate_arguments(p):
+    '''
+    validate_arguments :
+    '''
+    validateArguments(p)
 
 def p_FUNCARGUM_PRIMA(p):
     '''
@@ -569,8 +569,6 @@ def p_store_predefined_argument(p):
     store_predefined_argument :
     '''
     storePredefinedArgument(p)
-
-
 
 def p_EMPTY(p):
     '''
@@ -895,7 +893,6 @@ def doConditionOperation(p):
     expressionType = typesStack.pop()
     # Get the result of the expression
     expressionResult = operandsStack.pop()
-
     # Check if expressions type is boolean or not
     if expressionType != 'bool':
         # Execute type missmatch error
@@ -1124,7 +1121,7 @@ def storeFunction(p):
         print("storeFunction Virtual Address", virtualAddress)
 
     # Check if the function already exists
-    if functionsDirectory.lookupFunction(funcId):
+    if functionsDirectory.findFunction(funcId):
         # Execute Variable Already Declared Error
         errorFunctionAlreadyDeclared(p, funcId)
     else:
@@ -1273,12 +1270,10 @@ def endProcess(p):
 
 def checkFunctionExistance(p):
     global calledFunction
-
     # Get the function that is called
     calledFunction = p[-1]
-
     # Check if the function exists or not
-    if not functionsDirectory.lookupFunction(calledFunction):
+    if not functionsDirectory.findFunction(calledFunction):
         # Execute Variable Already Declared Error
         errorFunctionDoesNotExist(p, calledFunction)
     else:
@@ -1287,7 +1282,6 @@ def checkFunctionExistance(p):
 
 def generateEra(p):
     global quadCounter
-
     # Get the functions name
     funcId = p[-3]
     # Create quadruple for ERA operation
@@ -1296,7 +1290,6 @@ def generateEra(p):
     quadQueue.enqueue(quad)
     # Increment QuadCounter
     quadCounter += 1
-
     print("generateEra", currentScope,
           ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
            quad.result),
@@ -1321,7 +1314,6 @@ def validateArguments(p):
 
     # Get the list of parameter addresses
     paramAddresses = functionsDirectory.getParameterAddresses(calledFunction)
-
     # Check if the arguments of the call are the same than the functions declaration
     if not functionsDirectory.validateParameters(calledFunction, argumTypeQueue.items):
         errorArgumentsMissmatch(p)
@@ -1348,7 +1340,6 @@ def validateArguments(p):
         quadQueue.enqueue(quad)
         # Increment QuadCounter
         quadCounter += 1
-
 
         print("validateArguments 2", currentScope,
               ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
@@ -1398,13 +1389,6 @@ def storePredefinedArgument(p):
 
         print("storePredefinedArgument", currentScope, operand,
               "line: " + str(p.lexer.lineno))
-
-def storeColor(p):
-    global color
-
-    # Store color
-    color = p[-1]
-
 
 def drawBarChart(p):
     global predefParamStack
@@ -1481,10 +1465,10 @@ def accessDimenVariable(p):
     # Get the superior limit of the variable
     functionLocal = functionsDirectory.functions[currentScope]
     varTableLocal = functionLocal['variables']
-    if not varTableLocal.lookupVariable(varId):
+    if not varTableLocal.findVariable(varId):
         functionGlobal = functionsDirectory.functions[globalScope]
         varTableGlobal = functionGlobal['variables']
-        if not varTableGlobal.lookupVariable(varId):
+        if not varTableGlobal.findVariable(varId):
             errorVariableNotDeclared(p, varId)
         else:
             dimension = functionsDirectory.getVariableDimension(globalScope, varId)
@@ -1520,16 +1504,13 @@ def calculateDimen(p):
     else:
         # Get the dimension size
         dimenSize = memory.getValueByAddress(index)
-
         print ('dimenSize', dimenSize)
         # Get superior limit from the dimention size
         dimenSupLim = dimenSize-1
-
         print ('dimenSupLim', dimenSupLim)
 
 def validateIndex(p):
     global quadCounter
-
     # Get index of dimensional variable
     index = operandsStack.pop()
     # Get index type of dimensional variable
@@ -1545,7 +1526,6 @@ def validateIndex(p):
         quadQueue.enqueue(quad)
         # Increment quadCounter
         quadCounter += 1
-
         # Get the base address of the dimensional variable
         dimenVarBaseAddress = operandsStack.pop()
         # Get the dimensional variable type
@@ -1584,7 +1564,7 @@ def endProgram(p):
 
     # Show list of quadruples
     #quadQueue.printQueue()
-
+    #Crea Maquina Virtual con quadruplos, bloque de memoria y directorio de funciones
     vm = virtual_Machine(quadQueue, memory, functionsDirectory)
 
 # Error functions

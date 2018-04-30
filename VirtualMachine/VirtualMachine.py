@@ -13,17 +13,16 @@ from DataStructures.Stack import Stack
 class virtual_Machine:
 
     def __init__(self, quadQueue, memory, functionsDirectory):
+        self.quadQueue = quadQueue
         self.memory = memory
         self.functionsDirectory = functionsDirectory
-        self.quadQueue = quadQueue
-
+        print('Bloque de Memoria: ')
+        print '\n'
         print memory.memoryBlock
+        #Imprime los quadruplos
         quadQueue.printQueue()
         print '\n'
-        # Execute quadruples operations
         self.executeQuadruples()
-
-   
 
     def isInt(self, value):
         try:
@@ -39,29 +38,28 @@ class virtual_Machine:
         except (ValueError, TypeError):
             return False
 
-    # Execute operations from quadruples
     def executeQuadruples(self):
 
+        #Apuntador a los quadruplos
         instructionPointer = 0
-
         valuesStack = Stack()
         functionsStack = Stack()
         savedIPs = Stack()
-        speed = 8
 
+        #While que recorre todos los quadruplos
         while instructionPointer < self.quadQueue.size():
 
             quadLocation = self.quadQueue.size() - instructionPointer - 1
             quad = self.quadQueue.get(quadLocation)
-
             leftOperand = quad.left_operand
             rightOperand = quad.right_operand
             resultAddress = quad.result
-            print('Este es el operator ' + quad.operator)
-
+            #print('Este es el operator ' + quad.operator)
+            
             if isinstance(quad.left_operand, list):
                 if len(quad.left_operand) == 1:
                     leftOperand = self.memory.getValueByAddress(quad.left_operand[0])
+                    print('Este es el left operand ' + str(leftOperand))
             if isinstance(quad.right_operand, list):
                 if len(quad.right_operand) == 1:
                     rightOperand = self.memory.getValueByAddress(quad.right_operand[0])
@@ -70,215 +68,109 @@ class virtual_Machine:
                     resultAddress = self.memory.getValueByAddress(quad.result[0])
 
             if quad.operator == '+':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                 #              quad.result)
-
+                
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-                #print ('Left Operand Value', leftOperandValue)
-                #print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue + rightOperandValue
-                #print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == '-':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-                #print ('Left Operand Value', leftOperandValue)
-                #print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue - rightOperandValue
-                #print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == '*':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-                #print ('Left Operand Value', leftOperandValue)
-                #print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue * rightOperandValue
-                #print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == '/':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #     quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-                #print ('Left Operand Value', leftOperandValue)
-                #print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue / rightOperandValue
-                #print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == '!':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
-                #print ('Left Operand Value', leftOperandValue)
-
                 result = not(leftOperandValue)
-                #print ('Result Value', result, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, result)
 
             elif quad.operator == '=':
-                # print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
-                #print ('Left Operand Value', leftOperandValue)
-
-                #print ('Result Value', leftOperandValue, ' on address', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, leftOperandValue)
 
             elif quad.operator == '<':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-                #print ('Left Operand Value', leftOperandValue)
-                #print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue < rightOperandValue
-                #print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == '>':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-                #print ('Left Operand Value', leftOperandValue)
-                #print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue > rightOperandValue
-                #print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == '<=':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-                #print ('Left Operand Value', leftOperandValue)
-                # print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue <= rightOperandValue
-                # print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == '>=':
-                # print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-                # print ('Left Operand Value', leftOperandValue)
-                # print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue >= rightOperandValue
-                # print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == '==':
-                # print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-                #print ('Left Operand Value', leftOperandValue)
-                #print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue == rightOperandValue
-                #print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == '||':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #     quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-
-                #print ('Left Operand Value', leftOperandValue)
-                #print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue or rightOperandValue
-                #print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == '&&':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-
-                #print ('Left Operand Value', leftOperandValue)
-                #print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue and rightOperandValue
-                #print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == '!=':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 rightOperandValue = self.memory.getValueByAddress(rightOperand)
-
-                #print ('Left Operand Value', leftOperandValue)
-                #print ('Right Operand Value', rightOperandValue)
-
                 resultValue = leftOperandValue != rightOperandValue
-                #print ('Result Value', resultValue, ' on address ', resultAddress)
-
                 self.memory.modifyValueByAddress(resultAddress, resultValue)
 
             elif quad.operator == 'WRITE':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
-
                 print ('Left Operand Value', leftOperandValue)
-
                 print leftOperandValue
 
             elif quad.operator == 'READ':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #     quad.result)
 
                 input = raw_input()
-
                 if self.isInt(input):
                     if leftOperand == 'int':
                         self.memory.modifyValueByAddress(resultAddress, int(input))
@@ -312,42 +204,27 @@ class virtual_Machine:
 
 
             elif quad.operator == 'goto':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #     quad.result)
 
                 instructionPointer = resultAddress - 2
 
             elif quad.operator == 'gotof':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
                 if leftOperandValue == False:
                     instructionPointer = resultAddress - 2
 
             elif quad.operator == 'gosub':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #     quad.result)
 
                 savedIPs.push(quad.quad_number)
                 instructionPointer = resultAddress - 2
 
             elif quad.operator == 'RETURN':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
-
-                #print ('leftoperand',self.memory.getValueByAddress(resultAddress))
-
                 self.memory.modifyValueByAddress(rightOperand, leftOperandValue)
                 instructionPointer = resultAddress - 2
 
-                #print ('resultAddress',self.memory.getValueByAddress(resultAddress))
-
             elif quad.operator == 'ENDPROC':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                # quad.result)
 
                 if not functionsStack.isEmpty():
                     functionName = functionsStack.pop()
@@ -357,15 +234,12 @@ class virtual_Machine:
 
                     for variable in variables:
                         variableInfo = variables[variable]
-
                         variableVirtualAddress = variableInfo[1]
                         self.memory.modifyValueByAddress(variableVirtualAddress, valuesStack.pop())
 
                 instructionPointer = savedIPs.pop() - 1
 
             elif quad.operator == 'ERA':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #quad.result)
 
                 function = self.functionsDirectory.functions[leftOperand]
                 varTable = function['variables']
@@ -373,44 +247,27 @@ class virtual_Machine:
 
                 for variable in variables:
                     variableInfo = variables[variable]
-
                     variableVirtualAddress = variableInfo[1]
-                    #print('return variableVirtualAddress ', variableVirtualAddress)
                     variableValue = self.memory.getValueByAddress(variableVirtualAddress)
-                    #print('return variableValue ', variableValue)
                     valuesStack.push(variableValue)
-                    #print('valuesStack        ', valuesStack.items)
 
                 functionsStack.push(leftOperand)
 
             elif quad.operator == 'VER':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 index = self.memory.getValueByAddress(leftOperand)
-
-                #print ('index', index)
-                #print ('inf lim', rightOperand)
-                #print ('sup lim', resultAddress)
 
                 if not (index >= rightOperand and index <= resultAddress):
                     print("ERROR: Array index is out of bounds.")
                     sys.exit()
 
             elif quad.operator == 'PARAM':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                #      quad.result)
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
-                #print ('Left Operand Value', leftOperandValue)
-
                 self.memory.modifyValueByAddress(resultAddress, leftOperandValue)
-                #self.memory.modifyValueByAddress(resultAddress, result)
 
             elif quad.operator == 'DRAWBARCHART':
-                print'\n\n\n\n'
-                print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                      quad.result) 
+ 
                 plt.figure()   
                 plt.title("Bar Chart")
                 plt.xlabel("X")
@@ -419,50 +276,37 @@ class virtual_Machine:
                 plt.bar(self.memory.getValueByAddress(leftOperand[2]), self.memory.getValueByAddress(leftOperand[3]), align='center')
                 plt.bar(self.memory.getValueByAddress(leftOperand[4]), self.memory.getValueByAddress(leftOperand[5]), align='center')
                 plt.bar(self.memory.getValueByAddress(leftOperand[6]), self.memory.getValueByAddress(leftOperand[7]), align='center')
-                
                 plt.plot()
                
 
             elif quad.operator == 'DRAWDOTCHART':
-                print'\n\n\n\n'
-                print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                      quad.result) 
+
                 plt.figure()    
                 plt.title("Dot Chart")
                 plt.xlabel("X")
                 plt.ylabel("Y")
-                
                 plt.plot([self.memory.getValueByAddress(leftOperand[0]),self.memory.getValueByAddress(leftOperand[2]),self.memory.getValueByAddress(leftOperand[4]),self.memory.getValueByAddress(leftOperand[6])],[self.memory.getValueByAddress(leftOperand[1]),self.memory.getValueByAddress(leftOperand[3]),self.memory.getValueByAddress(leftOperand[5]),self.memory.getValueByAddress(leftOperand[7])],'ro')
                 plt.axis([0, 6, 0, 20])
                 
 
             elif quad.operator == 'DRAWLINECHART':
-                print'\n\n\n\n'
-                print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                      quad.result)  
+
                 plt.figure()   
                 plt.title("Line Chart")
                 plt.xlabel("X")
                 plt.ylabel("Y")
-                
                 plt.plot([self.memory.getValueByAddress(leftOperand[0]),self.memory.getValueByAddress(leftOperand[1]),self.memory.getValueByAddress(leftOperand[2]),self.memory.getValueByAddress(leftOperand[3]),self.memory.getValueByAddress(leftOperand[4]),self.memory.getValueByAddress(leftOperand[5]),self.memory.getValueByAddress(leftOperand[6]),self.memory.getValueByAddress(leftOperand[7])])
                 plt.axis([0, 6, 0, 20])
 
             elif quad.operator == 'DRAWHISTCHART':
-                print'\n\n\n\n'
-                print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                      quad.result)  
+
                 plt.figure() 
                 # Fixing random state for reproducibility
                 np.random.seed(19680801)
-
                 mu, sigma = self.memory.getValueByAddress(leftOperand[0]), self.memory.getValueByAddress(leftOperand[1])
                 x = mu + sigma * np.random.randn(10000)
-
                 # the histogram of the data
                 n, bins, patches = plt.hist(x, 50, normed=1, facecolor='g', alpha=0.75)
-
-
                 plt.xlabel('X')
                 plt.ylabel('Y')
                 plt.title('Histogram Chart')
@@ -470,19 +314,14 @@ class virtual_Machine:
                 plt.grid(True)
 
             elif quad.operator == 'DRAWPOLYCHART':
-                print'\n\n\n\n'
-                print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
-                      quad.result)  
+
                 plt.figure()   
                 plt.title("Polygons Chart")
                 # evenly sampled time at 200ms intervals
                 t = np.arange(self.memory.getValueByAddress(leftOperand[0]),self.memory.getValueByAddress(leftOperand[1]),self.memory.getValueByAddress(leftOperand[2]))
-
                 # red dashes, blue squares and green triangles
                 plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')
                 
-                                
-
             elif quad.operator == 'END':
                 #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,quad.result)
                 print("Quadruplo END")

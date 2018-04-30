@@ -1,10 +1,10 @@
+from Memory.Memory import memory_Block
+
+memory = memory_Block()
 class Queue:
 
     def __init__(self):
         self.items = []
-
-    def isEmpty(self):
-        return self.items == []
 
     def enqueue(self, item):
         self.items.insert(0,item)
@@ -19,11 +19,19 @@ class Queue:
         return self.items[index]
 
     def printQueue(self):
-        print("LIST OF QUADRUPLES:")
+        print("Cuadruplos:")
         i = 0
         while i < len(self.items):
             a = len(self.items) - i - 1
             quad = self.get(a)
             i += 1
-            print(("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
+            if quad.left_operand is not None:
+                print(("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
                    quad.result))
+            else:
+                print(("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
+                   quad.result))
+
+
+    def isEmpty(self):
+        return self.items == []

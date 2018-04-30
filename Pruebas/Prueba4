@@ -6,7 +6,7 @@ function void drawcharts(bool b) {
     print('Entre a funcion');
     if(b == true) {
         print('Entre al if dentro de funcion');
-        drawbarchart(16);
+        drawbarchart(1,2,3,4,5,6,7,8);
         
     }
 }

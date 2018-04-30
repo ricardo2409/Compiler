@@ -11,5 +11,5 @@ function int func1(int n) {
 
 
 int main() {
-    print(func1(5));
+    print(func1(6));
 }
