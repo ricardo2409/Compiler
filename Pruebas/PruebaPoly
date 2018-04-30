@@ -1,0 +1,19 @@
+program PruebaPoly;
+
+var float XI;
+var float XS;
+
+int main(){
+    
+print('Dame Limite Inf en X (Poner entero con decimal): ');
+
+XI = input();
+
+print('Dame Limite Sup en X (Poner entero con decimal): ');
+
+XS = input();
+
+drawpolychart(XI,XS,0.2);
+
+
+}

@@ -1,0 +1,48 @@
+program PruebaBar;
+
+var int X[5];
+var int Y[5];
+var int a;
+var int b;
+var int c;
+var int d;
+var int e;
+var int f;
+var int g;
+var int h;
+
+var int cont;
+
+
+int main(){
+
+cont = 0;
+
+while(cont < 4){
+
+print('Dame valor en X: ');
+
+X[cont] = input();
+
+print('Dame valor en Y: ');
+
+Y[cont] = input();
+
+cont = cont+1;
+
+}
+
+a = X[0];
+b = Y[0];
+c = X[1];
+d = Y[1];
+e = X[2];
+f = Y[2];
+g = X[3];
+h = Y[3];
+
+  
+drawbarchart(a,b,c,d,e,f,g,h);
+
+
+}
