@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import ply.yacc as yacc
 import sys
 
@@ -14,20 +16,20 @@ from Memory.Memory import memory_Block
 from VirtualMachine.VirtualMachine import virtual_Machine
 #-----------------------------------------------------------------
 
-# Directories
+# Directorios
 functionsDirectory = functions_Directory()
 semanticCube = semantic_Cube()
 funcReturn = {}
 
-# Memory
+# Memoria
 memory = memory_Block()
 
-# Scope management variables
+# Scope para manejo de las variables
 currentScope = ""
 globalScope = ""
 calledFunction = ""
 
-# Counter variables
+# Contadores
 quadCounter = 1
 argumCounter = 0
 
@@ -44,28 +46,26 @@ quadQueue = Queue()
 argumentQueue = Queue()
 argumTypeQueue = Queue()
 
-# Dimension management variables
+# Variables para el manejo de dimensiones
 dimenVar = ""
 dimenSupLim = 0
 
-# Global variables
-color = ""
+# Variables globales
 endprocnumber = 0
 returns = 0
 
-# Virtual Machine
+# Maquina Virtual
 vm = None
 
-# Default Values
+# Valores predefinidos para las variables
 defaultInt = 0
 defaultFloat = 0.0
 defaultBool = False
 defaultString = 'Null'
-
-# Validation variables
+# Variable para validación de funcion con return
 functionWithReturn = False
 
-# Grammar rules
+# Reglas Gramaticales
 def p_PROGRAM(p):
     '''
     program : PROGRAM ID add_global_function SEMICOLON goto_main vars function main endProgram
@@ -81,7 +81,6 @@ def p_add_global_function(p):
     '''
     add_global_function :
     '''
-    # Call function to add global function to FunctionsDirectory
     storeGlobalFunc(p)
 
 def p_MAIN(p):
@@ -99,14 +98,14 @@ def p_goto_main(p):
     '''
     goto_main :
     '''
-    # Create Quadruple to jump to main
+    # Crea el cuadruplo del main
     gotoMain(p)
 
 def p_add_jump_to_main(p):
     '''
     add_jump_to_main :
     '''
-    # Fill the jump quadruple of the first quadruple
+    # Llena el campo del jump en el cuadruplo del main creado anteriormente
     addJumpToMain(p)
 
 def p_BLOCK(p):
@@ -136,14 +135,14 @@ def p_CONDITION(p):
     '''
     condition : IF LPAREN sexpression RPAREN do_condition_operation block else
     '''
-    # Call function to fill the jumps
+    # Llena los jumps de los cuadruplos de condición
     doEndConditionOperation(p)
 
 def p_do_condition_operation(p):
     '''
     do_condition_operation :
     '''
-    # Do the condition operations and quadruples
+    # Hace las operaciones de condición y los cuadruplos
     doConditionOperation(p)
 
 def p_ELSE(p):
@@ -156,7 +155,7 @@ def p_do_else_operation(p):
     '''
     do_else_operation :
     '''
-    # Do the else operations and quadruples
+    # Hace las operaciones de else y los cuadruploss
     doElseOperation(p)
 
 def p_VARS(p):
@@ -169,7 +168,7 @@ def p_store_variable(p):
     '''
     store_variable :
     '''
-    # Store Variable in VarsTable of the current scope
+    # Guarda las variables en la tabla de variables con su scope correspondiente
     storeVariable(p)
 
 def p_ARRAY_DECLARATION(p):
@@ -204,21 +203,21 @@ def p_ASSIGNMENT(p):
     '''
     assignment : ID push_id_operand array ASSIGN push_operator sexpression SEMICOLON
     '''
-    # Do the assignment operations and quadruples
+    # Hace las operaciones de asignación y los cuadruplos
     doAssignOperation(p)
 
 def p_push_id_operand(p):
     '''
     push_id_operand :
     '''
-    # Push operand to stack
+    # Introduce el operando en el stack
     pushOperand(p)
 
 def p_push_operator(p):
     '''
     push_operator :
     '''
-    # Push operator to stack
+    # Introduce el operador en el stack
     pushOperator(p)
 
 def p_SEXPRESSION(p):
@@ -236,7 +235,7 @@ def p_do_not_operation(p):
     '''
     do_not_operation :
     '''
-    # Do the not operations and quadruples for expressions
+    # Hace la operación de not y su cuadruplo
     doNotOperation(p)
 
 def p_EXPRESSION(p):
@@ -262,7 +261,7 @@ def p_do_relational_operation(p):
     '''
     do_relational_operation :
     '''
-    # Do operations and quadruples for the relational operations
+    # Hace la operacion de los relacionaes y su cuadruplo
     operator = operatorsStack.top()
     if operator == '<' or operator == '>' or operator == '==' or operator == '!=' or operator == '<=' or \
                     operator == '>=' or operator == '||' or operator == '&&':
@@ -285,7 +284,7 @@ def p_do_math_operation1(p):
     '''
     do_math_operation1 :
     '''
-    # Do operations and quadruples for the plus and minus operations
+    # Hace la operacion del más y menos y su cuadruplo
     operator = operatorsStack.top()
     if operator == '+' or operator == '-':
         doOperations(p)
@@ -307,7 +306,7 @@ def p_do_math_operation2(p):
     '''
     do_math_operation2 :
     '''
-    # Do operations and quadruples for times and devide operations
+    # Hace la operacion de la multiplicación y división y su cuadruplo
     operator = operatorsStack.top()
     if operator == '*' or operator == '/':
         doOperations(p)
@@ -370,28 +369,28 @@ def p_push_float_operand(p):
     '''
     push_float_operand :
     '''
-    # Push float operand
+    # Introduce el operando float
     pushFloatOperand(p)
 
 def p_push_int_operand(p):
     '''
     push_int_operand :
     '''
-    # Push int operand
+    # Introduce el operando int
     pushIntOperand(p)
 
 def p_push_bool_operand(p):
     '''
     push_bool_operand :
     '''
-    # Push boolean operand
+    # Introduce el operando bool
     pushBoolOperand(p)
 
 def p_push_string_operand(p):
     '''
     push_string_operand :
     '''
-    # Push string operand
+    # Introduce el operando string
     pushStringOperand(p)
 
 def p_FUNCTIONCALL(p):
@@ -494,35 +493,35 @@ def p_WRITE(p):
     '''
     write : PRINT LPAREN sexpression RPAREN SEMICOLON
     '''
-    # Do Write quadruples
+    # Crea los cuadruplos del write
     doWriteOperation(p)
 
 def p_READ(p):
     '''
     read : ID push_id_operand array ASSIGN push_operator INPUT LPAREN RPAREN SEMICOLON
     '''
-    # Do Read quadruples
+    # Crea los cuadruplos del read
     doReadOperation(p)
 
 def p_CYCLE(p):
     '''
     cycle : WHILE push_cycle_jump LPAREN sexpression RPAREN do_while_operation block
     '''
-    # Fill Cycle quadruples jumps
+    # Llena los saltos de los cuadruplos de ciclos
     doEndCycleOperations(p)
 
 def p_push_cycle_jump(p):
     '''
     push_cycle_jump :
     '''
-    # Push jump reference to jumps stack
+    # Introduce el salto al cuadruplo del ciclo
     pushCycleJump(p)
 
 def p_do_while_operation(p):
     '''
     do_while_operation :
     '''
-    # Do Cycle quadruples
+    # Hace los cuadruplos de los ciclos
     doCycleOperations(p)
 
 def p_PREDEFINED(p):
@@ -538,36 +537,42 @@ def p_DRAWBARCHART(p):
     '''
     drawbarchart : DRAWBARCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     '''
+    # Crea el cuadruplo para crear la BarChart
     drawBarChart(p)
 
 def p_DRAWDOTCHART(p):    
     '''
     drawdotchart : DRAWDOTCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     '''
+    # Crea el cuadruplo para crear la DotChart
     drawDotChart(p)
 
 def p_DRAWLINECHART(p):    
     '''
     drawlinechart : DRAWLINECHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     '''
+    # Crea el cuadruplo para crear la LineChart
     drawLineChart(p)
 
 def p_DRAWHISTCHART(p):    
     '''
     drawhistchart : DRAWHISTCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     '''
+    # Crea el cuadruplo para crear la HistChart
     drawHistChart(p)
 
 def p_DRAWPOLYCHART(p):    
     '''
     drawpolychart : DRAWPOLYCHART LPAREN sexpression store_predefined_argument COMMA sexpression store_predefined_argument COMMA sexpression store_predefined_argument RPAREN SEMICOLON
     '''
+    # Crea el cuadruplo para crear la PolyChart
     drawPolyChart(p)
 
 def p_store_predefined_argument(p):
     '''
     store_predefined_argument :
     '''
+    # Guarda los argumentos pasados como parámetros en predefParamStack
     storePredefinedArgument(p)
 
 def p_EMPTY(p):
@@ -576,16 +581,16 @@ def p_EMPTY(p):
     '''
     pass
 
-# NoYacc FUNCTIONS..................
+# NoYacc Funciones
 def storeGlobalFunc(p):
     global currentScope
     global globalScope
 
-    # Save the current function name
+    #Guarda en globalScope y CurrentScope el nombre de la función actual
     globalScope = p[-1]
     currentScope = p[-1]
 
-    # Create function directory variable
+    # Crea el directorio de funciones con el nombre de la función actual
     functionsDirectory.insertFunction(currentScope, 'void', None)
     print("storeGlobalFunction", currentScope, functionsDirectory.getFunctionType(currentScope))
 
@@ -593,22 +598,21 @@ def changeToGlobal(p):
     global currentScope
     global globalScope
 
-    # Set the currentScope to the globalScope
     currentScope = globalScope
-    # Add the quad number where main function starts
+    # Agrega el número del cuadruplo donde empieza el main
     functionsDirectory.setStartQuadNumber(globalScope, quadCounter)
     print("changeToGlobal", currentScope, functionsDirectory.getStartQuadNumber(globalScope))
 
 def addJumpToMain(p):
     global quadCounter
 
-    # Get number of pending quad to fill
+    # Obtiene el número del salto pendiente a agregar a cuadruplo 
     end = jumpsStack.pop()
-    # Get reverse position of Queue
+    # Obtiene el número del cuadruplo correspondiente
     quadNumber = (quadQueue.size()) - end
-    # Get quad to fill
+    # Obtiene el cuadruplo a llenar
     quad = quadQueue.get(quadNumber)
-    # Full quads jump
+    # Agrega salto a cuadruplo
     quad.addJump(quadCounter)
 
     print("addJumpToMain", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand, quad.result),
@@ -617,14 +621,14 @@ def addJumpToMain(p):
 def gotoMain(p):
     global quadCounter
 
-    # Push number of quad to be jumpfilled
+    # Agrega a JumpsStack el número del cuadruplo a ser llenado
     jumpsStack.push(quadCounter)
-    # Create gotomain quadruple
+    # Crea el cuadruplo gotomain
     quad = Quadruple(quadCounter, 'goto', None, None, None)
-    # Increment quadCounter
-    quadCounter += 1
-    # Add quad to the QuadQueue
+    # Agrega el cuadruplo a la queue de Cuadruplos
     quadQueue.enqueue(quad)
+    # Incrementa el contador de cuadruplos
+    quadCounter += 1
 
     print("gotoMain",
           ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand, quad.result),
@@ -635,11 +639,11 @@ def storeVariable(p):
     global dimenVar
     global dimenSupLim
 
-    # Get varable name and type
+    # Obtiene el nombre de la variable y su tipo
     varId = p[-2]
     varType = p[-3]
 
-    # Set default value depending on the variable type
+    # Asigna a value el valor default del tipo correspondiente de la variable
     if varType == 'int':
         value = defaultInt
     elif varType == 'float':
@@ -649,42 +653,43 @@ def storeVariable(p):
     elif varType == 'string':
         value = defaultString
 
-    # Check if the current scope is the main program
+    # Checa si el scope actual es el main
     if currentScope == globalScope:
-        # Check if the variable is dimensional or not
+        # Checa si la variable es dimensionada
         if dimenVar != '':
-            # Store the dimensional variable into memory
+            # Guarda la variable dimensional en memoria
             virtualAddress = memory.storeDimensionVarToMemory(value, varType, dimenSupLim)
         else:
-            # Store the variable into memory
+            # Guarda la variable no dimensional en memoria
             virtualAddress = memory.storeVariableToMemory(value, varType)
     else:
-        # Check if the variable is dimensional or not
+        # El scope actual no es main
         if dimenVar != '':
-            # Check if the temporal is dimensional or not
+            # Checa si la variable temporal es dimensionada y la guarda en memoria
             virtualAddress = memory.storeDimensionTempToMemory(value, varType, dimenSupLim)
         else:
-            # Store the dimensional temporal into memory
+            # Guarda la variable temporal no dimensionada en memoria
             virtualAddress = memory.storeTempToMemory(value, varType)
 
-    # Check if the virtual address
+    # Checa si se pudo guardar la variable
     if virtualAddress == None:
+        #Despliega error
         errorCannotAllocate(p, varId)
     else:
-        # varId needs to be changed to virtual address
+        # Checa si la variable ya estaba declarada
         if not functionsDirectory.addFunctionVariable(currentScope, varId, varType, virtualAddress):
-            # Execute Variable Already Declared Error
+            # Despliega el error correspondiente
             errorVariableAlreadyDeclared(p, varId)
         else:
-            # Push the virtual address of the variable to operandsStack
+            # Introduce la dirección virtual en operandsStack
             operandsStack.push(virtualAddress)
-            # Push the type of the variable to operandsStack
+            # Introduce el tipo en typesStack
             typesStack.push(varType)
-            # Check if the variable is dimensional
+            # Checa si la variable es dimensional para guardar su dimensión en su espacio correspondiente
             if dimenVar != '':
-                # Add dimension to the variable on the VarsTable
+                # Agrega la dimensión a la variable en la table de variables
                 functionsDirectory.addDimensionToVariable(currentScope, varId, dimenSupLim)
-                # Restore dimensional global variables
+                # Reset a los valores para su reutilización
                 dimenSupLim = 0
                 dimenVar = ''
 
@@ -694,47 +699,47 @@ def storeVariable(p):
 def pushOperand(p):
     global currentScope
 
-    # Get variable name
+    # Obtiene el nombre de la variable
     varId = p[-1]
-    # Get Variable from the current scope varsTable
+    # Obtiene la variable de la tabla de variables del scope actual
     funcVar = functionsDirectory.getFunctionVariable(currentScope, varId)
 
-    # Check if the variables exists in the current scope
+    # Checa si la variable existe en la tabla de variables del scope actual
     if funcVar is None:
         funcVar = functionsDirectory.getFunctionVariable(globalScope, varId)
-        # Check of the variable exists in the global scope
+        # Checa si la varible existe en el scope global
         if funcVar is None:
-            # Execute Variable Not Declared Error
+            # No existe en scope actual ni scope global y se despliega el error
             errorVariableNotDeclared(p, varId)
         else:
-            # Get Variable Info
+            # Obtiene la varible
             funcVarInfo = funcVar[1]
-            # Variable type
+            # Obtener el tipo de la variable
             funcVarType = funcVarInfo[0]
-            # Variable name
+            # Obtener el nombre de la variable
             funcVarId = funcVarInfo[1]
-            # Push variable name to operands stack
+            # Insertar el nombre en el typesStack
             operandsStack.push(funcVarId)
-            # Push variables type to types stack
+            # Insertar el tipo en el typesStack
             typesStack.push(funcVarType)
     else:
-        # Get Variable Info
+        # Obtiene la varible
         funcVarInfo = funcVar[1]
-        # Variable type
+        # Obtener el tipo de la variable
         funcVarType = funcVarInfo[0]
-        # Variable name
+        # Obtener el nombre de la variable
         funcVarId = funcVarInfo[1]
-        # Push variable name to operands stack
+        # Insertar el nombre en el typesStack
         operandsStack.push(funcVarId)
-        # Push variables type to types stack
+        # Insertar el nombre en el typesStack
         typesStack.push(funcVarType)
 
     print("pushIdOperand", operandsStack.top(), typesStack.top())
 
 def pushOperator(p):
-    # Get operator
+    # Obtener el operador
     operator = p[-1]
-    # Push operator to operators stack
+    # Introduce el operador en el operatorStack
     operatorsStack.push(operator)
 
     print('push_operator', operatorsStack.top())
@@ -743,13 +748,13 @@ def pushFloatOperand(p):
     global operandsStack
     global operatorsStack
 
-    # Get operand
+    # Obtener el operando
     operand = p[-1]
-    # Store constant to memory and get virtual address
+    # Guarda la memoria constante en memoria y obtiene la dirección virtual
     virtualAddress = memory.storeConstantToMemory(operand, 'float')
-    # Push operand to operands stack
+    # Introduce la dirección en el operandsStack
     operandsStack.push(virtualAddress)
-    # Push type to operands stack
+    # Introduce el tipo en el typesStack
     typesStack.push('float')
 
     print("push_float_operand", operandsStack.top(), typesStack.top())
@@ -758,13 +763,13 @@ def pushIntOperand(p):
     global operandsStack
     global operatorsStack
 
-    # Get operand
+    # Obtener el operando
     operand = p[-1]
-    # Store constant to memory and get virtual address
+    # Guarda la memoria constante en memoria y obtiene la dirección virtual
     virtualAddress = memory.storeConstantToMemory(operand, 'int')
-    # Push operand to operands stack
+    # Introduce la dirección en el operandsStack
     operandsStack.push(virtualAddress)
-    # Push type to operands stack
+    # Introduce el tipo en el typesStack
     typesStack.push('int')
 
     print("push_int_operand", operandsStack.top(), typesStack.top())
@@ -773,18 +778,18 @@ def pushBoolOperand(p):
     global operandsStack
     global operatorsStack
 
-    # Get operand
+    # Obtener el operando
     operand = p[-1]
     if operand == 'true':
         operand = True
     elif operand == 'false':
         operand = False
 
-    # Store constant to memory and get virtual address
+    # Guarda la memoria constante en memoria y obtiene la dirección virtual
     virtualAddress = memory.storeConstantToMemory(operand, 'bool')
-    # Push operand to operands stack
+    # Introduce la dirección en el operandsStack
     operandsStack.push(virtualAddress)
-    # Push type to operands stack
+    # Introduce el tipo en el typesStack
     typesStack.push('bool')
 
     print("push_bool_operand", operandsStack.top(), typesStack.top())
@@ -793,13 +798,13 @@ def pushStringOperand(p):
     global operandsStack
     global operatorsStack
 
-    # Get operand
+    # Obtener el operando
     operand = p[-1]
-    # Store constant to memory and get virtual address
+    # Guarda la memoria constante en memoria y obtiene la dirección virtual
     virtualAddress = memory.storeConstantToMemory(operand, 'string')
-    # Push operand to operands stack
+    # Introduce la dirección en el operandsStack
     operandsStack.push(virtualAddress)
-    # Push type to operands stack
+    # Introduce el tipo en el typesStack
     typesStack.push('string')
 
     print("push_string_operand", operandsStack.top(), typesStack.top())
@@ -807,18 +812,15 @@ def pushStringOperand(p):
 def doReadOperation(p):
     global quadCounter
 
-    # Pop operand from operands stack
+    # Obtiene el operando de operandStack
     operand = operandsStack.pop()
-    # Pop type from types stack
+    # Obtiene el tipo de typesStack
     type = typesStack.pop()
-    # Pop operator from operators stack
-    operator = operatorsStack.pop()
-
-    # Create quadruple for Read operation
+    # Crea el cuadruplo para el read
     quad = Quadruple(quadCounter, 'READ', type, None, operand)
-    # Add quad to QuadQueue
+    # Agrega el cuadruplo a la queue
     quadQueue.enqueue(quad)
-    # Increment QuadCounter
+    # Incrementa el contador
     quadCounter += 1
 
     print("read", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand, quad.result),
@@ -827,15 +829,15 @@ def doReadOperation(p):
 def doWriteOperation(p):
     global quadCounter
 
-    # Pop operand from operands stack
+    # Obtiene el operando de operandStack
     operand = operandsStack.pop()
-    # Pop type from types stack
+    # Obtiene el tipo de typesStack
     popType = typesStack.pop()
-    # Create quadruple for Write operation
+    # Crea el cuadruplo para el write
     quad = Quadruple(quadCounter, 'WRITE', operand, None, None)
-    # Add quad to QuadQueue
+    # Agrega el cuadruplo a la queue
     quadQueue.enqueue(quad)
-    # Increment QuadCounter
+    # Incrementa el contador
     quadCounter += 1
 
     print("write", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand, quad.result),
@@ -846,41 +848,42 @@ def doNotOperation(p):
     global semanticCube
     global quadCounter
 
-    # Check if the operators stack is not empty
+    # Checa que el operatorStack no esté vacio
     if not operatorsStack.isEmpty():
-        # Check if the top operator is a negation '!'
+        # Checa que el operador de arriba sea un '!'
         if operatorsStack.top() == '!':
-            # Retrieve operand from operands stack
+            # Obtener el operando
             operand = operandsStack.pop()
-            # Retrieve type from types stack
+            # Obtener el tipo
             type = typesStack.pop()
-            # Retrieve operator from operators stack
+            # Obtener el operador
             operator = operatorsStack.pop()
 
-            # Check if type is bool or not
+            # Checa que el tipo sea bool
             if type != 'bool':
                 resultType = 'Error'
             else:
                 resultType = 'bool'
+                #Cambia el valor a false
                 value = defaultBool
 
-            # Check if the result type is bool or not
+            # Checa si el resultado del tipo es bool
             if resultType != 'bool':
-                # Execute type missmatch error
+                # Despliega el error typeMismatch
                 errorTypeMismatch(p)
             else:
-                # Store variable to memory and get virtual address
+                # Guarda el valor en memoria temporal y obtiene su dirección
                 virtualAddress = memory.storeTempToMemory(value, resultType)
-                # Create quadruple for the negation operation
+                # Crea el cuadruplo de la negación
                 quad = Quadruple(quadCounter, operator, operand, None,
                                  virtualAddress)  # Last parameter should be the VirtualAddress
-                # Add quad to QuadQueue
+                # Agrega el cuadruplo a la queue
                 quadQueue.enqueue(quad)
-                # Push temporal variable to operands stack
+                # Inserta la variable temporal al operandsStack
                 operandsStack.push(virtualAddress)
-                # Push temporal variables type to types stack
+                # Inserta el tipo temporal al typesStack
                 typesStack.push(resultType)
-                # Increment QuadCounter
+                # Incrementa el contador de cuadruplos
                 quadCounter += 1
 
                 print("doNotOperation",("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
@@ -889,22 +892,22 @@ def doNotOperation(p):
 def doConditionOperation(p):
     global quadCounter
 
-    # Get the type of the evaluated expression
+    # Obtener el tipo de la expresión
     expressionType = typesStack.pop()
-    # Get the result of the expression
+    # Obtener el resultado de la expresión
     expressionResult = operandsStack.pop()
-    # Check if expressions type is boolean or not
+    # Checa si la expresión es bool
     if expressionType != 'bool':
-        # Execute type missmatch error
+        # Despliega el error de type mismatch
         errorTypeMismatch(p)
     else:
-        # Create quadruple to jump if condition is false
+        # Crea el cuadruplo de gotof
         quad = Quadruple(quadCounter, 'gotof', expressionResult, None, None)
-        # Add quadruple to QuadQueue
+        # Agrega el cuadruplo a la queue
         quadQueue.enqueue(quad)
-        # Push number of quad to be jumpfilled
+        # Inserta el cuadruplo anterior a ser llenado a la jumpStack
         jumpsStack.push(quadCounter - 1)
-        # Increment QuadCounter
+        # Incrementa el contador
         quadCounter += 1
 
         print("doConditionOperation", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand,
@@ -913,13 +916,13 @@ def doConditionOperation(p):
 def doEndConditionOperation(p):
     global quadCounter
 
-    # Get number of pending quad to fill
+    # Obtener el numero del salto pendiente
     end = jumpsStack.pop()
-    # Get reverse position of Queue
+    # Obtener el número del cuadruplo pendiente
     quadNumber = (quadQueue.size() - 1) - end
-    # Get quad to fill
+    # Obtener el cuadruplo a llenar
     quad = quadQueue.get(quadNumber)
-    # Full quads jump
+    # Agrega el jump al cuadruplo
     quad.addJump(quadCounter)
 
     print("doEndConditionOperation", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand,
@@ -928,21 +931,21 @@ def doEndConditionOperation(p):
 def doElseOperation(p):
     global quadCounter
 
-    # Create quadruple to jump if else
+    # Crear el cuadruplo del goto vacío al final del else
     quad = Quadruple(quadCounter, 'goto', None, None, None)
-    # Add quad to QuadQueue
+    # Agregar el cuadruplo a la queue
     quadQueue.enqueue(quad)
-    # Get number of pending quad to fill
-    false = jumpsStack.pop()
-    # Get reverse position of Queue
-    quadNumber = (quadQueue.size() - 1) - false
-    # Push number of quad to be jumpfilled
+    # Obtiene el número pendiente del salto a llenar
+    num = jumpsStack.pop()
+    # Obtiene el numero del último cuadruplo
+    quadNumber = (quadQueue.size() - 1) - num
+    # Inserta el numero del cuadruplo a ser llenado
     jumpsStack.push(quadCounter - 1)
-    # Increment QuadCounter
+    # Incrementa el contador
     quadCounter += 1
-    # Add quad to QuadQueue
+    # Obtiene el cuadruplo de la queue
     quad = quadQueue.get(quadNumber)
-    # Full quads jump
+    # Le agrega el salto al cuadruplo correspondiente
     quad.addJump(quadCounter)
 
     print("doElseOperation", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand,
@@ -952,33 +955,32 @@ def doAssignOperation(p):
     global semanticCube
     global quadCounter
 
-    # Retrieve right operand of the assignment
+    # Obtiene el operando derecho
     rightOperand = operandsStack.pop()
-    # Retrieve right type of the assignment
+    # Obtiene el tipo derecho
     rightType = typesStack.pop()
-    # Retrieve left operand of the assignment
+    # Obtiene el operando izquierdo
     leftOperand = operandsStack.pop()
-    # Retrieve right type of the assignment
+    # Obtiene el tipo derecho
     leftType = typesStack.pop()
-    # Retrieve operator of the assignment
+    # Obtiene el operador
     operator = operatorsStack.pop()
 
     if rightType == 'void':
         errorNotReturnFunction(p)
     else:
-        # Do the semantic evaluation of the assignment
+        # Obtener el resultado del cubo semántico con tipo izquierdo, tipo derecho y el operador
         resultType = semanticCube.getType(leftType, rightType, operator)
 
-        # Check if the result type is Error or not
+        # Checa el resultado que mandó el cubo semántico
         if resultType == 'Error':
-            # Execute type missmatch error
             errorTypeMismatch(p)
         else:
-            # Create cuadruple for assignment
+            # Crea el cuadruplo de la asignación
             quad = Quadruple(quadCounter, operator, rightOperand, None, leftOperand)
-            # Add quad to QuadQueue
+            # Agrega el cuadruplo a la queue
             quadQueue.enqueue(quad)
-            # Increment QuadCounter
+            # Incrementa el contador
             quadCounter += 1
 
             print("doAssignOperation", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand,
@@ -988,21 +990,21 @@ def doOperations(p):
     global semanticCube
     global quadCounter
 
-    # Retrieve right operand of the operation
+    # Obtiene el operando derecho
     rightOperand = operandsStack.pop()
-    # Retrieve right type of the operation
+    # Obtiene el tipo derecho
     rightType = typesStack.pop()
-    # Retrieve left operand of the operation
+    # Obtiene el operando izquierdo
     leftOperand = operandsStack.pop()
-    # Retrieve right type of the operation
+    # Obtiene el tipo izquierdo
     leftType = typesStack.pop()
-    # Retrieve operator of the operation
+    # Obtiene el operador correspondiente
     operator = operatorsStack.pop()
 
-    # Do the semantic evaluation of the operation
+    # Obtener el resultado del cubo semántico con tipo izquierdo, tipo derecho y el operador
     resultType = semanticCube.getType(leftType, rightType, operator)
 
-    # Set default value depending on the variable type
+    # Asignar el valor por default dependiendo del tipo
     if resultType == 'int':
         value = defaultInt
     elif resultType == 'float':
@@ -1012,22 +1014,22 @@ def doOperations(p):
     elif resultType == 'string':
         value = defaultString
 
-    # Check if the result type is Error or not
+    # Checa si el resultado del cubo semántico es error
     if resultType == 'Error':
         # Execute type missmatch error
         errorTypeMismatch(p)
     else:
-        # Store variable into memory
+        # Guarda la variable en memoria temporal y obtiene la dirección virtual
         virtualAddress = memory.storeTempToMemory(value, resultType)
-        # Create cuadruple for assignment
+        # Crea el cuadruplo
         quad = Quadruple(quadCounter, operator, leftOperand, rightOperand, virtualAddress)
-        # Add quad to QuadQueue
+        # Agrega el cuadruplo a la queue
         quadQueue.enqueue(quad)
-        # Push temporals virtual address to operands stack
+        # Inserta la dirección en el operandStack
         operandsStack.push(virtualAddress)
-        # Push temporal variables type to types stack
+        # Inserta el tipo resultante en el typeStack
         typesStack.push(resultType)
-        # Increment QuadCounter
+        # Incrementa el contador
         quadCounter += 1
 
         print("doOperation", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
@@ -1036,32 +1038,32 @@ def doOperations(p):
 def pushCycleJump(p):
     global quadCounter
 
-    # Push quad to be jumpfilled
+    # Inserta el número de cuadruplo a ser llenado
     jumpsStack.push(quadCounter)
     print('pushCycleJump', jumpsStack.top())
 
 def doCycleOperations(p):
     global quadCounter
 
-    # Get the type of the evaluated expression
+    # Obtiene el tipo de la expresión
     expressionType = typesStack.pop()
-    # Get the result of the expression
+    # Obtiene el resultado de la expresión
     expressionResult = operandsStack.pop()
 
-    # Check if expressions type is boolean or not
+    # Checa si la expresión es booleana
     if expressionType != 'bool':
-        # Execute type missmatch error
+        # Despliega el error de type mismatch
         errorTypeMismatch(p)
     else:
-        # Create quadruple to jump if cycle condition if false
+        # Crea el cuadruplo de gotof de la condición false vacío
         quad = Quadruple(quadCounter, 'gotof', expressionResult, None, None)
-        # Add quad to QuadCounter
+        # Agrega el cuadruplo a la queue
         quadQueue.enqueue(quad)
-        # Push quad to be jumpfilled
+        # Agrega el número del cuadrúplo a ser rellenado después
         jumpsStack.push(quadCounter - 1)
         print('doCycleOperations', jumpsStack.top())
         print('doCycleOperations', jumpsStack.items)
-        # Increment QuadCounter
+        # Incrementa el contador
         quadCounter += 1
 
         print("doCycleOperations", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand,
@@ -1070,24 +1072,24 @@ def doCycleOperations(p):
 def doEndCycleOperations(p):
     global quadCounter
 
-    # Get number of pending quad to fill
+    # Obtiene el número pendiente de cuadruplo a llenar
     end = jumpsStack.pop()
-    # Get number of quad to return
+    # Obtiene el número de cuadruplo a regresar
     retrn = jumpsStack.pop()
-    # Get reverse position of Queue
+    # Obtiene la posición del cuadruplo a llenar
     quadNumber = (quadQueue.size() - 1) - end
-    # Get reverse position of Queue
+    # Obtiene la posición del cuadruplo a regresar
     returnJump = (quadQueue.size() - 1) - retrn
-    # Get quad to fill
+    # Obtiene el cuadruplo a llenar
     endQuad = quadQueue.get(quadNumber)
 
-    # Create quadruple to return in cycle
+    # Crea el cuadruplo a regresar
     quad = Quadruple(quadCounter, 'goto', None, None, end)
-    # Add quad to QuadQueue
+    # Agrega el cuadruplo a la queue
     quadQueue.enqueue(quad)
-    # Increment QuadCounter
+    # Incrementa contador
     quadCounter += 1
-    # Fill quads jump
+    # Agrega el salto al cuadruplo
     endQuad.addJump(quadCounter)
 
     print("doEndCycleOperation", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand,
@@ -1096,11 +1098,11 @@ def doEndCycleOperations(p):
 def storeFunction(p):
     global currentScope
 
-    # Get function name and type
+    # Obtiene el nombre y tipo de la función
     funcId = p[-1]
     funcType = p[-2]
 
-    # Set default value depending on the variables type
+    # Asigna a value el valor default del tipo correspondiente de la función
     if funcType == 'int':
         value = defaultInt
     elif funcType == 'float':
@@ -1110,24 +1112,24 @@ def storeFunction(p):
     elif funcType == 'string':
         value = defaultString
 
-    # ...........RECURSIVENESS..............
-    # Check if the function type is void or not
+    # RECURSIVIDAD
+    # Asignar el valor por default dependiendo del tipo
     if funcType != 'void':
-        # Store the functions returning variable space
+        # Guarda la funcón en memoría y obtiene la dirección
         virtualAddress = memory.storeVariableToMemory(value, funcType)
-        # Add return variable
+        # Agrega la función en el directorio de funciones
         functionsDirectory.addFunctionVariable(globalScope, funcId, funcType, virtualAddress)
 
         print("storeFunction Virtual Address", virtualAddress)
 
-    # Check if the function already exists
+    # Checa si la función ya existe
     if functionsDirectory.findFunction(funcId):
-        # Execute Variable Already Declared Error
+        # Error de función ya declarada
         errorFunctionAlreadyDeclared(p, funcId)
     else:
-        # Change the scope to the current local (Function)
+        # Cambia el scope a la función
         currentScope = funcId
-        # Store function into the functions directory
+        # Guarda la función y su tipo en el directorio de variables
         functionsDirectory.insertFunction(funcId, funcType, None)
 
         print("storeFunction", currentScope, functionsDirectory.getFunctionType(funcId),
@@ -1136,11 +1138,11 @@ def storeFunction(p):
 def storeParameter(p):
     global currentScope
 
-    # Get parameter name and type
+    # Obtiene el nombre y tipo del parámetro
     paramId = p[-1]
     paramType = p[-2]
 
-    # Set default value depending on the variables type
+    # Asigna a value el valor default del tipo correspondiente del parámetro
     if paramType == 'int':
         value = defaultInt
     elif paramType == 'float':
@@ -1150,16 +1152,16 @@ def storeParameter(p):
     elif paramType == 'string':
         value = defaultString
 
-    # Store the parameter into memory
+    # Guarda el parámetro en la memory temporal
     virtualAddress = memory.storeTempToMemory(value, paramType)
 
     print("storeParameter Virtual Address", globalScope, virtualAddress)
 
-    # Add variable to functions vars table
+    # Agrega la función a la tabla de variables
     if functionsDirectory.addFunctionVariable(currentScope, paramId, paramType, virtualAddress):
-        # Add parameter type to the function
+        # Agrega el tipo del parámetro de la función
         functionsDirectory.addParameterType(currentScope, paramType)
-        # Add parameter virtual address to the function
+        # Agrega la dirección del parámetro de la función
         functionsDirectory.addParameterAddress(currentScope, virtualAddress)
 
         print("storeParameter1", currentScope, functionsDirectory.getFunctionVariable(currentScope, virtualAddress),
@@ -1171,7 +1173,7 @@ def addFunctionQuadStart(p):
     global quadCounter
     global currentScope
 
-    # Add the quad number where main function starts
+    # Agrega el número del cuadruplo donde inicia el main
     functionsDirectory.setStartQuadNumber(currentScope, quadCounter)
 
     print("addFunctionQuadStart", currentScope, functionsDirectory.getStartQuadNumber(currentScope),
@@ -1183,37 +1185,37 @@ def returnOperation(p):
     global endprocnumber
     global returns
 
-    # Get the functions type
+    # Obtiene el tipo de la función
     functionType = functionsDirectory.getFunctionType(currentScope)
 
-    # Check if the function type is void or not
+    # Checa si la función es void
     if functionType == 'void':
         errorVoidFunction(p)
     else:
-        # Set the variable that identifies if the function has return or not
+        # Cambiar la variable que identifica que una función tiene valor de retorno
         functionWithReturn = True
-        # Get return operand
+        # Obtiene el operando
         operand = operandsStack.pop()
-        # Get return operands type
+        # Obtiene el tipo de retorno
         type = typesStack.pop()
-        # Get the returning functions variable
         functionVariable = functionsDirectory.getFunctionVariable(globalScope, currentScope)
         funcVirtualAddress = functionVariable[1][1]
-        # Check if the operands type is the same as the function type
+        # Checa si el tipo de retorno es diferente al de la función
         if type != functionType:
             errorReturnWrongType(p)
         else:
+            #Contador de retornos para recursividad
             returns += 1
             returnStack.push(quadCounter)
-            # Create quadruple for the negation operation
+            # Crea cuadruplo para el return
             quad = Quadruple(quadCounter, 'RETURN', operand, funcVirtualAddress, None)
-            # Add quad to QuadQueue
+            # Agrega cuadruplo a la queue
             quadQueue.enqueue(quad)
-            # Push temporal variable to operands stack
+            # Inserta la dirección virtual al operandsStack
             operandsStack.push(funcVirtualAddress)
-            # Push temporal variables type to types stack
+            # Inserta el tipo al typeStack
             typesStack.push(functionType)
-            # Increment QuadCounter
+            # Incrementa el contador
             quadCounter += 1
 
             print("returnOperation", currentScope, ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
@@ -1224,57 +1226,56 @@ def endProcess(p):
     global quadCounter
     global returns
     print('returns.........', returns)
-    # Get the functions type
+    # Obtiene el tipo de la función
     functionType = functionsDirectory.getFunctionType(currentScope)
-    # Save quad number to bie jumpfilled
     funcReturn[currentScope] = quadCounter
-    # Save
     endprocnumber = quadCounter
+    #Ciclo para la cantidad de retorno
     for i in range(0, returns):
-        # Get number of pending quad to fill
+        # Obtiene el número del cuadruplo pendiente a llenar
         end = returnStack.pop()
-        # Get reverse position of Queue
+        # Obtiene la posición del cuadruplo
         quadNumber = (quadQueue.size()) - end
-        # Get quad to fill
+        # Obtiene el cuadruplo a llenar
         quad = quadQueue.get(quadNumber)
-        # Full quads jump
+        # Llena el cuadruplo con el salto correspondiente
         quad.addJump(quadCounter)
         print("endProcess", currentScope,
           ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
            quad.result),
           "line: " + str(p.lexer.lineno))
 
-    # Check if the functions type is void or not
+    # Checa si la función es void
     if functionType != 'void':
-        # Check if the function has return or not
+        # Checa si la función tiene un return
         if not functionWithReturn:
             errorFunctionNoReturn(p)
         else:
-            # Create quadruple for the end process
+            # Crea cuadruplo con ENDPROC
             quad = Quadruple(quadCounter, 'ENDPROC', None, None, None)
-            # Add quad to QuadQueue
+            # AAgrega cuadruplo a la queue
             quadQueue.enqueue(quad)
-            # Increment QuadCounter
+            # Incrementa contador
             quadCounter += 1
     else:
-        # Create quadruple for the end process
+        # Crea cuadruplo con ENDPROC
         quad = Quadruple(quadCounter, 'ENDPROC', None, None, None)
-        # Add quad to QuadQueue
+        # Agrega cuadruplo a la queue
         quadQueue.enqueue(quad)
-        # Increment QuadCounter
+        # Incrementa contador
         quadCounter += 1
-
+    #Resetea variable de retornos
     returns = 0
-    # When function ends, clear temporal memory
+    # Cuando termina la función se limpia la memoria temporal
     memory.clearTempMemory()
 
 def checkFunctionExistance(p):
     global calledFunction
-    # Get the function that is called
+    # Obtiene la función llamada
     calledFunction = p[-1]
-    # Check if the function exists or not
+    # Checa si la función existe 
     if not functionsDirectory.findFunction(calledFunction):
-        # Execute Variable Already Declared Error
+        # Error de función no existe
         errorFunctionDoesNotExist(p, calledFunction)
     else:
         print("checkFunctionExistance", currentScope, functionsDirectory.getFunctionType(calledFunction),
@@ -1282,13 +1283,13 @@ def checkFunctionExistance(p):
 
 def generateEra(p):
     global quadCounter
-    # Get the functions name
+    # Obtiene el nombre de la función
     funcId = p[-3]
-    # Create quadruple for ERA operation
+    # Crea el cuadruplo de ERA
     quad = Quadruple(quadCounter,'ERA', funcId, None, None)
-    # Add quad to QuadQueue
+    # Agrega cuadruplo a la queue
     quadQueue.enqueue(quad)
-    # Increment QuadCounter
+    # Incrementa contador
     quadCounter += 1
     print("generateEra", currentScope,
           ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
@@ -1296,13 +1297,13 @@ def generateEra(p):
           "line: " + str(p.lexer.lineno))
 
 def storeArgument(p):
-    # Get the argument
+    # Obtiene el argumento
     argument = operandsStack.pop()
-    # Get the argument type
+    # Obtiene el tipo del argumento
     argumentType = typesStack.pop()
-    # Push the argument to the argument stack
+    # Inserta el argumento a la argumentQueue
     argumentQueue.enqueue(argument)
-    # Push the argument type to the argument type stack
+    # Inserta el tipo del argumento a la argumentTypeQueue
     argumTypeQueue.enqueue(argumentType)
 
 def validateArguments(p):
@@ -1312,20 +1313,20 @@ def validateArguments(p):
     global quadCounter
     global argumCounter
 
-    # Get the list of parameter addresses
+    # Lista de direcciones de parámetros
     paramAddresses = functionsDirectory.getParameterAddresses(calledFunction)
-    # Check if the arguments of the call are the same than the functions declaration
+    # Checa si los parámetros son del mismo tipo que lo que son declarados
     if not functionsDirectory.validateParameters(calledFunction, argumTypeQueue.items):
         errorArgumentsMissmatch(p)
     else:
         while not argumentQueue.isEmpty():
-            # Create quadruple for ERA operation
+            # Crea el cuadruplo de PARAM
             quad = Quadruple(quadCounter, 'PARAM', argumentQueue.dequeue(), None, paramAddresses[argumCounter])
-            # Add quad to QuadQueue
+            # Agrega cuadruplo a la queue
             quadQueue.enqueue(quad)
-            # Increment QuadCounter
+            # Incrementa contador
             quadCounter += 1
-            # Increment argumCounter
+            # Incrementa contador de argumentos
             argumCounter += 1
 
             print("validateArguments 1", currentScope,
@@ -1334,11 +1335,11 @@ def validateArguments(p):
                   "line: " + str(p.lexer.lineno))
 
         startQuad = functionsDirectory.getStartQuadNumber(calledFunction)
-        # Create quadruple for the gosub operation
+        # Crea el cuadruplo de gosub
         quad = Quadruple(quadCounter, 'gosub', calledFunction, None, startQuad)
-        # Add quad to QuadQueue
+        # Agrega cuadruplo a la queue
         quadQueue.enqueue(quad)
-        # Increment QuadCounter
+        # Incrementa contador
         quadCounter += 1
 
         print("validateArguments 2", currentScope,
@@ -1346,27 +1347,26 @@ def validateArguments(p):
                quad.result),
               "line: " + str(p.lexer.lineno))
 
-        # Get functions type
+        # Obtiene el tipo de la función
         functionType = functionsDirectory.getFunctionType(calledFunction)
-        # Check if the functions is void or not
+        # Checa si la función es void
         if functionType == 'void':
-            # Push Error Tag if the function is void
+            # Inserta error en la operandStack para tratar después
             operandsStack.push('Error')
-            # Push the functions type to the typesStack
+            # Inserta el tipo a la typeStack
             typesStack.push(functionType)
         else:
-            # Get the functions returning variable
+            # Obtiene la variable de retorno de la función
             funcVar = functionsDirectory.getFunctionVariable(globalScope, calledFunction)
-            # Get variable virtual address
+            # Obtiene la direcciñon virtual de la variable
             varVirtualAddress = funcVar[1][1]
-            # Push functions name to the operands stack
+            # Inserta el nombre de la variable
             operandsStack.push(varVirtualAddress)
-            # Push functions type to the typesStack
+            # Inserta el tipo de la variable
             typesStack.push(functionType)
-            # Increment Temporal Variables Counter
             print("validateArguments 3", currentScope, "line: " + str(p.lexer.lineno))
 
-        # Clear arguments elements
+        # Limpia las variables y contadores
         argumentQueue = Queue()
         argumTypeQueue = Queue()
         calledFunction = ""
@@ -1375,16 +1375,16 @@ def validateArguments(p):
 def storePredefinedArgument(p):
     global currentScope
 
-    # Get operand
+    # Obtiene el operando
     operand = operandsStack.pop()
-    # Get operand type
+    # Obtiene el tipo
     type = typesStack.pop()
 
-    # Check if the arguments are numeric or not
-    if type != 'int' and type != 'float' and type != 'bool' and type != 'string':
+    # Checa si los argumentos son de un tipo válido
+    if type != 'int' and type != 'float' and type != 'bool':
         errorArgumentTypeMissmatch(p)
     else:
-        # Push predefined function parameter to the stack
+        # Inserta el parámetro de la función en el predefParamStack
         predefParamStack.push(operand)
 
         print("storePredefinedArgument", currentScope, operand,
@@ -1393,76 +1393,71 @@ def storePredefinedArgument(p):
 def drawBarChart(p):
     global predefParamStack
     global quadCounter
-    print('Estoy en DrawBarChart')
-    # Create quadruple for the DRAWLINE predefined function
+    # Crea el cuadruplo de DRAWBARCHART
     quad = Quadruple(quadCounter, 'DRAWBARCHART', predefParamStack.items, None, None)
-    # Add quad to QuadQueue
+    # Inserta el cuadruplo a la queue
     quadQueue.enqueue(quad)
-    # Increment quadCounter
+    # Incrementa contador
     quadCounter += 1
-    # Reset parameter stack and color
+    # Resetea el stack de parametros
     predefParamStack = Stack()
 
 def drawDotChart(p):
     global predefParamStack
     global quadCounter
-    print('Estoy en DrawDotChart')
-    # Create quadruple for the DRAWLINE predefined function
+    # Crea el cuadruplo de DRAWDOTCHART
     quad = Quadruple(quadCounter, 'DRAWDOTCHART', predefParamStack.items, None, None)
-    # Add quad to QuadQueue
+    # Inserta el cuadruplo a la queue
     quadQueue.enqueue(quad)
-    # Increment quadCounter
+    # Incrementa contador
     quadCounter += 1
-    # Reset parameter stack and color
+    # Resetea el stack de parametros
     predefParamStack = Stack()
 
 def drawLineChart(p):
     global predefParamStack
     global quadCounter
-    print('Estoy en DrawLineChart')
-    # Create quadruple for the DRAWLINE predefined function
+    # Crea el cuadruplo de DRAWLINECHART
     quad = Quadruple(quadCounter, 'DRAWLINECHART', predefParamStack.items, None, None)
-    # Add quad to QuadQueue
+    # Inserta el cuadruplo a la queue
     quadQueue.enqueue(quad)
-    # Increment quadCounter
+    # Incrementa contador
     quadCounter += 1
-    # Reset parameter stack and color
+    # Resetea el stack de parametros
     predefParamStack = Stack()
 
 def drawHistChart(p):
     global predefParamStack
     global quadCounter
-    print('Estoy en DrawHistChart')
-    # Create quadruple for the DRAWLINE predefined function
+    # Crea el cuadruplo de DRAWHISTCHART
     quad = Quadruple(quadCounter, 'DRAWHISTCHART', predefParamStack.items, None, None)
-    # Add quad to QuadQueue
+    # Inserta el cuadruplo a la queue
     quadQueue.enqueue(quad)
-    # Increment quadCounter
+    # Incrementa contador
     quadCounter += 1
-    # Reset parameter stack and color
+    # Resetea el stack de parametros
     predefParamStack = Stack()
 
 def drawPolyChart(p):
     global predefParamStack
     global quadCounter
-    print('Estoy en DrawPolyChart')
-    # Create quadruple for the DRAWLINE predefined function
+    # Crea el cuadruplo de DRAWPOLYCHART
     quad = Quadruple(quadCounter, 'DRAWPOLYCHART', predefParamStack.items, None, None)
-    # Add quad to QuadQueue
+    # Inserta el cuadruplo a la queue
     quadQueue.enqueue(quad)
-    # Increment quadCounter
+    # Incrementa contador
     quadCounter += 1
-    # Reset parameter stack and color
+    # Resetea el stack de parametros
     predefParamStack = Stack()
 
 def accessDimenVariable(p):
     global dimenSupLim
 
-    # Get the dimensional variable name
+    # Obtiene el nombre de la variable dimensionada
     varId = p[-3]
     print varId
 
-    # Get the superior limit of the variable
+    # Obtiene el limite superior de la variable
     functionLocal = functionsDirectory.functions[currentScope]
     varTableLocal = functionLocal['variables']
     if not varTableLocal.findVariable(varId):
@@ -1471,14 +1466,14 @@ def accessDimenVariable(p):
         if not varTableGlobal.findVariable(varId):
             errorVariableNotDeclared(p, varId)
         else:
+            #Si está en globalScope
             dimension = functionsDirectory.getVariableDimension(globalScope, varId)
-            # Set global superior limit
             dimenSupLim = dimension
 
             print("accessDimenVariable", globalScope, dimension)
     else:
+        #Sí está en currentScope
         dimension = functionsDirectory.getVariableDimension(currentScope, varId)
-        # Set global superior limit
         dimenSupLim = dimension
 
         print("accessDimenVariable", currentScope, dimension)
@@ -1486,64 +1481,64 @@ def accessDimenVariable(p):
 def dimenVariable(p):
     global dimenVar
 
-    # Get dimensional variable
+    # Obtiene variable dimensionada
     dimenVar = p[-2]
 
 def calculateDimen(p):
     global dimenVar
     global dimenSupLim
 
-    # Get index of dimensional variable
+    # Obtiene index de variable dimensionada
     index = operandsStack.pop()
-    # Get index type of dimensional variable
+    # Obtiene el tipo de la variable dimensionada
     indexType = typesStack.pop()
 
-    # Check if the index type is int or not
+    # Checa si el index es int
     if indexType != 'int':
         errorTypeMismatch(p)
     else:
-        # Get the dimension size
+        # Obtiene el tamaño de la dimensión
         dimenSize = memory.getValueByAddress(index)
         print ('dimenSize', dimenSize)
         # Get superior limit from the dimention size
-        dimenSupLim = dimenSize-1
+        dimenSupLim = dimenSize - 1
         print ('dimenSupLim', dimenSupLim)
 
 def validateIndex(p):
     global quadCounter
-    # Get index of dimensional variable
+    # Obtiene el index de la variable dimensionada
     index = operandsStack.pop()
-    # Get index type of dimensional variable
+    # Obtiene el tipo de la variable dimensionada
     indexType = typesStack.pop()
     print memory.memoryBlock[index]
-    # Check if the index type is int or not
+    # Checa si el index es int
     if indexType != 'int':
         errorArgumentsMissmatch(p)
     else:
-        # Create quadruple for the VERIFICATION
+        # Crea el cuadruplo de VER
         quad = Quadruple(quadCounter, 'VER', index, 0, dimenSupLim)
-        # Add quad to QuadQueue
+        # Inserta el cuadruplo a la queue
         quadQueue.enqueue(quad)
-        # Increment quadCounter
+        # Incrementa contador
         quadCounter += 1
-        # Get the base address of the dimensional variable
+        # Obtiene la dirección base de la variable dimensionada
         dimenVarBaseAddress = operandsStack.pop()
-        # Get the dimensional variable type
+        # Obtiene el tipo de la variable dimensionada
         dimenVarType = typesStack.pop()
-        # Store de dimensional variable base address into memory
+        # Guarda la variable en memoria temporal y obtiene la dirección base
         baseAddress = memory.storeTempToMemory(dimenVarBaseAddress, 'int')
-        # Store de dimensional variable base address into memory to get the actual address of the index
+        # Guarda la variable en memoria temporal y obtiene la dirección virtual
         virtualAddress = memory.storeTempToMemory(dimenVarBaseAddress, dimenVarType)
 
-        # Create quadruple to get indexed address
+        # Crea el cuadruplo de + después de la verificación
         quad = Quadruple(quadCounter, '+', index, baseAddress, virtualAddress)
-        # Add quad to QuadQueue
+        # Inserta el cuadruplo a la queue
         quadQueue.enqueue(quad)
-        # Increment quadCounter
+        # Incrementa contador
         quadCounter += 1
-        # Push indexed address to operands stack
+        # Inserta la direccion en operandStack
         operandsStack.push([virtualAddress])
-        # Push dimensional variable type
+        # Inserta el tipo en typeStack
         typesStack.push(dimenVarType)
 
         print(
@@ -1553,21 +1548,22 @@ def validateIndex(p):
 def endProgram(p):
     global quadQueue
 
-    # Create ending quad
+    # Crea el cuadruplo de END
     quad = Quadruple(quadCounter, "END", None, None, None)
-    # Add quad to QuadQueue
+    # Inserta el cuadruplo a la queue
     quadQueue.enqueue(quad)
 
     print("endProgram", ("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,
                           quad.result))
     print("Correct Sintax.\n\n")
 
-    # Show list of quadruples
+    # Imprime lista de cuadruplos
     #quadQueue.printQueue()
+
     #Crea Maquina Virtual con quadruplos, bloque de memoria y directorio de funciones
     vm = virtual_Machine(quadQueue, memory, functionsDirectory)
 
-# Error functions
+# Funciones de errores
 def p_error(p):
     print('ERROR: Syntax Error in line: ' + str(p.lexer.lineno))
     sys.exit()

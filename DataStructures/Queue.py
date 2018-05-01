@@ -19,6 +19,7 @@ class Queue:
         return self.items[index]
 
     def printQueue(self):
+        print '\n'
         print("Cuadruplos:")
         i = 0
         while i < len(self.items):

@@ -17,12 +17,12 @@ class virtual_Machine:
         self.memory = memory
         self.functionsDirectory = functionsDirectory
         print('Bloque de Memoria: ')
-        print '\n'
         print memory.memoryBlock
         #Imprime los quadruplos
         quadQueue.printQueue()
         print '\n'
         self.executeQuadruples()
+
 
     def isInt(self, value):
         try:
@@ -55,11 +55,11 @@ class virtual_Machine:
             rightOperand = quad.right_operand
             resultAddress = quad.result
             #print('Este es el operator ' + quad.operator)
-            
+
             if isinstance(quad.left_operand, list):
                 if len(quad.left_operand) == 1:
                     leftOperand = self.memory.getValueByAddress(quad.left_operand[0])
-                    print('Este es el left operand ' + str(leftOperand))
+                    #print('Este es el left operand ' + str(leftOperand))
             if isinstance(quad.right_operand, list):
                 if len(quad.right_operand) == 1:
                     rightOperand = self.memory.getValueByAddress(quad.right_operand[0])
@@ -165,8 +165,7 @@ class virtual_Machine:
             elif quad.operator == 'WRITE':
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
-                print ('Left Operand Value', leftOperandValue)
-                print leftOperandValue
+                print ('Print: ', leftOperandValue)
 
             elif quad.operator == 'READ':
 
@@ -301,11 +300,11 @@ class virtual_Machine:
             elif quad.operator == 'DRAWHISTCHART':
 
                 plt.figure() 
-                # Fixing random state for reproducibility
+                # Crea semilla random
                 np.random.seed(19680801)
                 mu, sigma = self.memory.getValueByAddress(leftOperand[0]), self.memory.getValueByAddress(leftOperand[1])
                 x = mu + sigma * np.random.randn(10000)
-                # the histogram of the data
+                # Datos para histograma
                 n, bins, patches = plt.hist(x, 50, normed=1, facecolor='g', alpha=0.75)
                 plt.xlabel('X')
                 plt.ylabel('Y')
@@ -323,7 +322,6 @@ class virtual_Machine:
                 plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')
                 
             elif quad.operator == 'END':
-                #print("Quad " + str(quad.quad_number), quad.operator, quad.left_operand, quad.right_operand,quad.result)
                 print("Quadruplo END")
                 plt.show()
                 sys.exit()
