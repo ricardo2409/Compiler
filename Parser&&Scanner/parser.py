@@ -1016,7 +1016,8 @@ def doOperations(p):
 
     # Checa si el resultado del cubo semántico es error
     if resultType == 'Error':
-        # Execute type missmatch error
+       
+        #Ejecuta error type missmatch
         errorTypeMismatch(p)
     else:
         # Guarda la variable en memoria temporal y obtiene la dirección virtual
@@ -1500,7 +1501,8 @@ def calculateDimen(p):
         # Obtiene el tamaño de la dimensión
         dimenSize = memory.getValueByAddress(index)
         print ('dimenSize', dimenSize)
-        # Get superior limit from the dimention size
+    
+        # Obtiene el limite superior del tamaño de la dimension
         dimenSupLim = dimenSize - 1
         print ('dimenSupLim', dimenSupLim)
 
@@ -1557,8 +1559,7 @@ def endProgram(p):
                           quad.result))
     print("Correct Sintax.\n\n")
 
-    # Imprime lista de cuadruplos
-    #quadQueue.printQueue()
+   
 
     #Crea Maquina Virtual con quadruplos, bloque de memoria y directorio de funciones
     vm = virtual_Machine(quadQueue, memory, functionsDirectory)
@@ -1616,7 +1617,7 @@ def errorNotReturnFunction(p):
     print('Error: Function not returning anything in line ' + str(p.lexer.lineno))
     sys.exit()
 
-# Build parser
+# Contruir parser
 parser = yacc.yacc()
 
 print("Introduce el nombre del archivo: ")

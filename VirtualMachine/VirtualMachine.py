@@ -165,7 +165,7 @@ class virtual_Machine:
             elif quad.operator == 'WRITE':
 
                 leftOperandValue = self.memory.getValueByAddress(leftOperand)
-                print ('Print: ', leftOperandValue)
+                print leftOperandValue
 
             elif quad.operator == 'READ':
 
@@ -316,9 +316,9 @@ class virtual_Machine:
 
                 plt.figure()   
                 plt.title("Polygons Chart")
-                # evenly sampled time at 200ms intervals
+               
                 t = np.arange(self.memory.getValueByAddress(leftOperand[0]),self.memory.getValueByAddress(leftOperand[1]),self.memory.getValueByAddress(leftOperand[2]))
-                # red dashes, blue squares and green triangles
+              
                 plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')
                 
             elif quad.operator == 'END':

@@ -2,7 +2,8 @@ class vars_Table:
     def __init__(self):
         self.variables = {}
 
-    # Insert new variable to the table
+   
+    # Insertar nueva variable a la tabla
     def insertVariable(self, name, type, virtualAddress):
         self.variables[name] = [type, virtualAddress]
 
@@ -17,18 +18,21 @@ class vars_Table:
         else:
             return None
 
-    # Check if variable exists
+    
+    # Checar si la variable existe
     def findVariable(self, name):
         return self.variables.has_key(name)
 
-    # Return variable's values
+    
+    # Regresar el valor de la variable
     def get(self, name):
         if self.variables.has_key(name):
             return (name, self.variables[name])
         else:
             return None
 
-    # Search by virtual address and return id if exists
+    
+    # Buscar por direccion virtual y retornar id en caso de que exista
     def getIdByAddress(self, virtualAddress):
         for variable in self.variables:
             variableInfo = self.variables[variable]

@@ -1,6 +1,6 @@
 import ply.lex as lex
 
-# List of tokens
+# Lista de tokens
 tokens = ['ID', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', #Operators
           'ASSIGN', 'EQUAL', 'NOTEQUAL', 'GREATER', 'LESS', # Operators
           'GREATEROREQUAL', 'LESSOREQUAL', 'AND', 'OR', 'NOT', # Operators
@@ -9,7 +9,7 @@ tokens = ['ID', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', #Operators
           'INT', 'STRING', 'FLOAT', 'BOOLEAN', 
 ]
 
-# Dictionary of reserved words
+# Diccionario de palabras reservadas
 reserved = {
     'main': 'MAIN',
     'if':'IF',
@@ -26,7 +26,7 @@ reserved = {
     'float': 'FLOATTYPE',
     'string': 'STRINGTYPE',
     'void': 'VOID',
-    'input': 'INPUT', #Checar**************
+    'input': 'INPUT', 
     'var': 'VAR',
     'drawbarchart' : 'DRAWBARCHART',
     'drawdotchart' : 'DRAWDOTCHART',
@@ -38,7 +38,7 @@ reserved = {
 
 tokens = tokens+list(reserved.values())
 
-# Ignored characters
+# Caracteres ignorados
 
 t_ignore = ' \t\r'
 
@@ -66,10 +66,10 @@ t_COMMA = r'\,'
 t_SEMICOLON = r'\;'
 t_STRING = r'\".*\" | \'.*\''
 
-# ID token definition
+# Definicion del ID token
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value,'ID')    # Check for reserved words
+    t.type = reserved.get(t.value,'ID')    # Revisar si hay palabras reservadas
     return t
 
 def t_FLOAT(t):
@@ -82,7 +82,7 @@ def t_INT(t):
     t.value = int(t.value)
     return t
 
-# Define a rule so we can track line numbers
+# Definicion de regla para poder llevar el numero de linea
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
@@ -90,30 +90,14 @@ def t_newline(t):
 def t_COMMENT(t):
     r'\#.*'
     pass
-    # No return value. Token discarded
+    # Sin valor de retorno, se descarta token
 
-# Error handling rule
+# Regla para manejo de errores
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
-# Build the lexer
+# Construir el lexer
 lexer = lex.lex()
 
 
-'''
-f = open(filename,"r")
-
-# Give the lexer some input
-lexer.input(f.read())
-
-# Tokenize
-while True:
-    tok = lexer.token()
-    if not tok:
-        break      # No more input
-    print(tok)
-
-print("\n")
-return tokens
-'''
