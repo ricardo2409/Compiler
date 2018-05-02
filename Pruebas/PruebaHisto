@@ -1,19 +1,12 @@
-program Prueba6;
+program PruebaHisto;
 
 var int mu;
 var int sigma;
 
 int main(){
-    
-print('Dame mu: ');
-
-mu = input();
-
-print('Dame sigma: ');
-
-sigma = input();
-
-drawhistchart(mu,sigma);
-
-
+	print('Escribe mu: ');
+	mu = input();
+	print('Escribe sigma: ');
+	sigma = input();
+	drawhistchart(mu,sigma);
 }

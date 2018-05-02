@@ -1,0 +1,40 @@
+program PruebaFibonacci;
+var int fibo;
+var int fibo1;
+var int fibo2;
+var int i;
+
+
+function int fiboRecursivo(int n)
+{
+	if(n <= 1) {
+        return n;
+    } else {
+        return (fiboRecursivo(n - 1) + fiboRecursivo(n - 2));
+    }
+}
+
+function int fiboNoRecursivo(int n){
+	if((n == 0) || (n == 1)){
+		return n;
+	}else{
+		fibo2 = 0;
+		fibo1 = 1;
+		fibo = 0;
+		i = 2;
+		while(i <= n){
+			fibo = fibo1 + fibo2;
+			fibo2 = fibo1;
+			fibo1 = fibo;
+			i = i + 1;
+		}
+		return fibo;
+	}
+}
+
+int main() {
+	print("FiboRecursivo");
+    print(fiboRecursivo(3));
+    print("FiboNoRecursivo");
+    print(fiboNoRecursivo(3));
+}

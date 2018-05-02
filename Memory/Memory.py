@@ -25,16 +25,16 @@ class memory_Block:
 
     # Segmentos de Memoria
     VarStart = 0
-    ConstStart = 2000
-    TempStart = 4000
-    MemorySize = 6000
+    ConstStart = 4000
+    TempStart = 8000
+    MemorySize = 12000
 
     def storeVariableToMemory(self, value, type):
         if (self.VarStart + self.varCounter) < self.ConstStart:
             intStart = self.VarStart
-            floatStart = self.VarStart + 500
-            boolStart = self.VarStart + 1000
-            stringStart = self.VarStart + 1500
+            floatStart = self.VarStart + 1000
+            boolStart = self.VarStart + 2000
+            stringStart = self.VarStart + 3000
 
             if type == 'int':
                 if self.varCounter < floatStart:
@@ -81,9 +81,9 @@ class memory_Block:
     def storeConstantToMemory(self, value, type):
         if (self.ConstStart + self.constCounter) < self.TempStart:
             intStart = self.ConstStart
-            floatStart = self.ConstStart + 500
-            boolStart = self.ConstStart + 1000
-            stringStart = self.ConstStart + 1500
+            floatStart = self.ConstStart + 1000
+            boolStart = self.ConstStart + 2000
+            stringStart = self.ConstStart + 3000
 
             if type == 'int':
                 if self.constCounter < floatStart:
@@ -129,9 +129,9 @@ class memory_Block:
     def storeTempToMemory(self, value, type):
         if (self.TempStart + self.tempCounter) < self.MemorySize:
             intStart = self.TempStart
-            floatStart = self.TempStart + 500
-            boolStart = self.TempStart + 1000
-            stringStart = self.TempStart + 1500
+            floatStart = self.TempStart + 1000
+            boolStart = self.TempStart + 2000
+            stringStart = self.TempStart + 3000
 
             if type == 'int':
                 if self.tempCounter < floatStart:

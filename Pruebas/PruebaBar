@@ -20,15 +20,15 @@ cont = 0;
 
 while(cont < 4){
 
-print('Dame valor en X: ');
+	print('Dame valor en X: ');
 
-X[cont] = input();
+	X[cont] = input();
 
-print('Dame valor en Y: ');
+	print('Dame valor en Y: ');
 
-Y[cont] = input();
+	Y[cont] = input();
 
-cont = cont+1;
+	cont = cont+1;
 
 }
 

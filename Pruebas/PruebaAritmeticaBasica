@@ -1,0 +1,16 @@
+program PruebaAritmeticaBasica;
+var int uno;
+var int dos;
+
+int main() {
+	uno = 1;
+	dos = 2;
+	print("Suma");
+    print(dos+uno);
+    print("Resta");
+    print(dos-uno);
+    print("Multiplicación");
+    print(dos*uno);
+    print("Division");
+    print(dos/uno);
+}

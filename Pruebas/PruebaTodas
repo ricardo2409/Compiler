@@ -1,0 +1,43 @@
+program Prueba5;
+
+var int opcion;
+
+int main() {
+
+    print('0 --> PolygonChart');
+    print('1 --> LineChart');
+    print('2 --> BarChart');
+    print('3 --> DotChart');
+    print('4 --> HistChart');
+    print('5 --> All Charts at once');
+    print('Escribe la opción: ');
+    opcion = input();
+
+    if(opcion == 5){
+      drawpolychart(0.,5.,0.2);
+      drawlinechart(1,2,3,4,5,6,7,8);
+      drawbarchart(1,2,3,4,5,6,7,8);
+      drawdotchart(1,2,3,4,5,6,7,8);
+      drawhistchart(100,15);
+    }
+
+    if(opcion == 0){
+      drawpolychart(0.,5.,0.2);
+    }
+
+    if(opcion == 1){
+      drawlinechart(1,2,3,4,5,6,7,8); 
+    }
+
+    if(opcion == 2){
+      drawbarchart(1,2,3,4,5,6,7,8); 
+    }
+
+    if(opcion == 3){
+      drawdotchart(1,2,3,4,5,6,7,8); 
+    }
+
+    if(opcion == 4){
+      drawhistchart(100,15); 
+    }
+  }

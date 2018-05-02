@@ -1,0 +1,30 @@
+program PruebaFactorial;
+var int resultado;
+var int i;
+
+function int FactorialRecursivo(int n) {
+    if(n == 1) {
+        return 1;
+    }
+    else {
+        return n * FactorialRecursivo(n - 1);
+    }
+}
+function int FactorialNoRecursivo(int n) {
+    i = 2;
+    resultado = 1;
+   while(i <= n){
+   	resultado = resultado * i;
+   	i = i + 1;
+   }
+        
+    return resultado;
+}
+
+
+int main() {
+	print("FactorialRecursivo");
+    print(FactorialRecursivo(6));
+    print("FactorialNoRecursivo");
+    print(FactorialNoRecursivo(6));
+}

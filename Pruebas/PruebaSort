@@ -1,0 +1,49 @@
+program PruebaSort;
+
+var int i;
+var int aux1;
+var int aux2;
+var int aux3;
+var int tamano;
+var int intArray[4];
+
+int main() {
+
+    tamano = 4;
+    i = 0;
+    print('Introduzca valores del arreglo:');
+    while(i < tamano){
+        intArray[i] = input();
+        i = i + 1;
+    }
+
+    i = 0;
+    print('Arreglo leído:');
+    while(i < tamano) {
+        print(intArray[i]);
+        i = i + 1;
+    }
+
+    aux1 = 0;
+    aux2 = 1;
+    while(aux1 < tamano) {
+        while(aux2 < tamano) {
+            if(intArray[aux1] > intArray[aux2]) {
+                aux3 = intArray[aux1];
+                intArray[aux1] = intArray[aux2];
+                intArray[aux2] = aux3;
+            }
+            aux2 = aux2 + 1;
+        }
+        aux1 = aux1 + 1;
+        aux2 = aux1 + 1;
+    }
+
+    i = 0;
+    print('Arreglo ordenado:');
+    while(i < tamano) {
+        print(intArray[i]);
+        i = i + 1;
+    }
+
+}

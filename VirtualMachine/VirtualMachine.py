@@ -322,7 +322,8 @@ class virtual_Machine:
                 plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')
                 
             elif quad.operator == 'END':
-                print("Quadruplo END")
+                #print("Quadruplo END")
+                #print self.functionsDirectory.functions
                 plt.show()
                 sys.exit()
 

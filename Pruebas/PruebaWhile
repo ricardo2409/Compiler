@@ -1,0 +1,16 @@
+program PruebaWhile;
+var int control;
+var int i;
+
+
+int main(){
+	i = 0;
+	print("Escribe un número:");
+	control = input();
+	while(i < control){
+
+		print(i + 1);
+		i = i + 1;
+
+	}
+}
