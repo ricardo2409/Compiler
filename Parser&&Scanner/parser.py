@@ -1139,6 +1139,8 @@ def storeFunction(p):
 def storeParameter(p):
     global currentScope
 
+    print("Esto es p")
+    print(p)
     # Obtiene el nombre y tipo del parámetro
     paramId = p[-1]
     paramType = p[-2]
