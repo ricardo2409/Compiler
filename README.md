@@ -2,7 +2,7 @@ Pasos para ejecutar el compilador:
 
 -Descomprimir el archivo .zip
 
--En la terminal, ubicarse en el directorio LearnOP
+-En la terminal, ubicarse en el directorio LearnTC
 
 -Ejecutar los siguientes comandos: 
 	python Parser\&\&Scanner/scanner.py 
